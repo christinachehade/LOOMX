@@ -303,31 +303,13 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   align-items: center;
 }
 
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 999px;
-  border: 1px solid var(--border-strong);
-  background: var(--glass);
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--text-dim);
+.hero-logo {
+  font-size: clamp(30px, 4vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: var(--text);
   margin-bottom: 28px;
-  letter-spacing: 0.01em;
-}
-.hero-eyebrow .dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 10px 2px var(--accent);
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
 }
 
 .hero-title {
