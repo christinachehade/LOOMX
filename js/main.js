@@ -170,9 +170,9 @@
     let width, height, dpr;
 
     const colors = [
-      "rgba(91, 110, 245, 0.55)",
-      "rgba(139, 108, 255, 0.45)",
-      "rgba(91, 110, 245, 0.3)",
+      "rgba(79, 95, 224, 0.16)",
+      "rgba(124, 92, 240, 0.14)",
+      "rgba(79, 95, 224, 0.10)",
     ];
 
     function resize() {
@@ -205,7 +205,7 @@
         r: 0.6 + Math.random() * 1.6,
         vx: (Math.random() - 0.5) * 0.15,
         vy: (Math.random() - 0.5) * 0.15,
-        alpha: 0.15 + Math.random() * 0.35,
+        alpha: 0.12 + Math.random() * 0.22,
       }));
     }
 
@@ -216,8 +216,8 @@
       t += 0.01;
       ctx.clearRect(0, 0, width, height);
 
-      // gradient mesh blobs
-      ctx.globalCompositeOperation = "lighter";
+      // gradient mesh blobs — soft pastel washes over the white background
+      ctx.globalCompositeOperation = "source-over";
       blobs.forEach((b) => {
         const x = (b.baseX + Math.sin(t * b.speed + b.offset) * b.driftX) * width;
         const y = (b.baseY + Math.cos(t * b.speed + b.offset) * b.driftY) * height;
@@ -240,7 +240,7 @@
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
         ctx.beginPath();
-        ctx.fillStyle = `rgba(245, 247, 250, ${p.alpha})`;
+        ctx.fillStyle = `rgba(79, 95, 224, ${p.alpha})`;
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fill();
       });
