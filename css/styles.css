@@ -224,7 +224,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   align-items: center;
   gap: 8px;
   font-weight: 800;
-  font-size: 20px;
+  font-size: 27px;
   letter-spacing: -0.02em;
   text-transform: lowercase;
 }
