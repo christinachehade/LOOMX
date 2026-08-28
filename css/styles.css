@@ -2,16 +2,6 @@
    LOOMX — Design System
 ========================================================= */
 
-/* Self-hosted, subset (L O M X glyphs only) so the wordmark
-   never depends on an external font request. */
-@font-face {
-  font-family: 'LoomxMark';
-  font-style: normal;
-  font-weight: 900;
-  font-display: block;
-  src: url(data:font/woff2;base64,d09GMgABAAAAAAOMAA8AAAAABowAAAMzAAOaHQAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbIBwwBmA/U1RBVEQARBEICoMcgmMBNgIkAxQLDAAEIAWDXgcgG0QFQJ6FsWNtRCKRo/byy+oI4uH/79vvc+99zdZb3gQaWDaAzhpOIFGAYdQKdfj0xfMf3NL3IeICUXNOIMLVhYwV8c3j3Uy51jfbxMa0/wFqYSdCMfvBNfUT6AH/T/zxETNnw2E1VwFOcKBZYomzNVDpVsOgTxAMmjo9i75BZxKgByAhxAQh0OHDD81KqppgwQT4CaCgo8Rg3+eyXz2pg9+hXxbhp0YtLknPboMppBvTBpizXmIFnwgCuEH80+MjYwlV2vLv5RNQphQFCCD+mbuAARYhFhhQY8AEcxkdkwnwAYxNd4Y7nEO02W2AjDARCCAACWRQYxGomYgDre6xpVptZi94sbvuamT6AFIssAdUgA6++Ap4AqAA+t0wqM872XHWygsy3bxoPT0P5pK3ac6qWVkIZt/h2606r8wmDJNdsDBr3XbwIg1f9uqwZmLp/YrRSJtfg9eEVRWbXsFvmXaDtNm48UcIm9TmmtzTkZ3oeJ1pRzVbte79FNdG7ZdOzlkpMxEt1k0Xbx+LQlQr+n9U9PfoR3/CdoSG7gzDXgvuChfJv4sIVuyMm4PVzX5KMHeZj+SO8KkJba4n3dXPXp5/O+Xh3h7dFXustKc62s7oGxK29/RuTajTnmxvPy36SN8GtYeSy+PDuwsGW/W1SRVx4V2F/ApFbLIIVgX9S/fGxw6ioAb7zvbsfZK170nvjG/IK2HjE4fGl+7rBTXEZ0Y69Crj4CtpBoAA+e575/E1rtc+6y+W/Qbwdj+nAvwlnEtefvmTqWDCAxoYQMCrFKiOeeRlFxBcShV/kJDKkZdlFORwxKQZ8AhUBpiTmCIAQEGgSwGLiiXgAXhAPJwGhp0ZYMW412qiAlNe/jFmPMKhgIBecIYSmQSWsIo8NPD4FSgkGbfaJMGoMbIACeLESxKgyZhhAWoYiAQySYA6kyQawwYr5uczkI2RTJoSgOs0TzZuSoZYsUYJmn4GA2IMkujjn5ZIRukMGyERyabEEtfrxK8+v4BOv0FaDYaNMkS+PSlRjBRxEmSqUatGscxqdjTSIk1bJJCIApy11SCt2jN6tZysn45gcKK/kuj1E7EAv+UDAAA=) format('woff2');
-}
-
 :root {
   /* Colors */
   --bg: #ffffff;
@@ -238,8 +228,11 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   height: 30px;
   width: auto;
 }
-.logo-ink { fill: var(--text); }
-.logo-accent { fill: var(--accent); }
+.brand-icon {
+  display: block;
+  height: 36px;
+  width: auto;
+}
 
 .nav-links {
   display: flex;
