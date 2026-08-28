@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loomx — AI Automation &amp; Consulting Agency</title>
+<meta name="description" content="Loomx helps businesses streamline operations through AI, automation, and thoughtful web design. We build the systems that run your business while you sleep.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230a0a0f%22/><text x=%2250%22 y=%2270%22 font-family=%22Arial,sans-serif%22 font-weight=%22900%22 font-size=%2258%22 text-anchor=%22middle%22 fill=%22%23f5f7fa%22>l<tspan fill=%22%235b6ef5%22>x</tspan></text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="cursor-orb" id="cursorOrb"></div>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">
+      <span class="logo-text">loom<span class="logo-x">x</span></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#services">What We Do</a>
+      <a href="#process">How It Works</a>
+      <a href="#industries">Who We Help</a>
+      <a href="#why-us">Why Us</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary btn-sm">Book a Free Audit</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <canvas id="meshCanvas" class="mesh-canvas"></canvas>
+  <div class="hero-glow"></div>
+
+  <div class="hero-content container">
+    <div class="reveal-up hero-eyebrow">
+      <span class="dot"></span> AI Automation &amp; Consulting Agency
+    </div>
+
+    <h1 class="hero-title" id="heroTitle" aria-label="We build the systems that run your business while you sleep.">
+      <span class="line">
+        <span class="word">We</span> <span class="word">build</span> <span class="word">the</span> <span class="word">systems</span>
+      </span>
+      <span class="line">
+        <span class="word">that</span> <span class="word">run</span> <span class="word">your</span> <span class="word accent-word">business</span>
+      </span>
+      <span class="line">
+        <span class="word">while</span> <span class="word">you</span> <span class="word">sleep.</span>
+      </span>
+    </h1>
+
+    <p class="hero-sub reveal-up" style="--delay:0.1s">
+      We automate the work that slows you down — streamlining operations for businesses of any size through AI, intelligent workflows, and web design that actually converts.
+    </p>
+
+    <div class="hero-actions reveal-up" style="--delay:0.2s">
+      <a href="#contact" class="btn btn-primary btn-lg">
+        Book a Free Audit
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#process" class="btn btn-ghost btn-lg">See How It Works</a>
+    </div>
+
+    <div class="hero-trust reveal-up" style="--delay:0.3s">
+      <span>Trusted by lean teams &amp; growing companies across</span>
+      <div class="trust-tags">
+        <span>E-commerce</span><span>·</span><span>SaaS</span><span>·</span><span>Real Estate</span><span>·</span><span>Professional Services</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator reveal-up" style="--delay:0.4s">
+    <span>Scroll</span>
+    <div class="scroll-line"><div class="scroll-dot"></div></div>
+  </div>
+</section>
+
+<!-- ============ LOGO / INDUSTRY MARQUEE (top strip) ============ -->
+<section class="marquee-strip">
+  <div class="marquee-track">
+    <div class="marquee-group">
+      <span>Workflow Automation</span><span class="sep">✦</span>
+      <span>AI Agents</span><span class="sep">✦</span>
+      <span>Systems Integration</span><span class="sep">✦</span>
+      <span>Web Design</span><span class="sep">✦</span>
+      <span>Data Pipelines</span><span class="sep">✦</span>
+      <span>Process Consulting</span><span class="sep">✦</span>
+    </div>
+    <div class="marquee-group" aria-hidden="true">
+      <span>Workflow Automation</span><span class="sep">✦</span>
+      <span>AI Agents</span><span class="sep">✦</span>
+      <span>Systems Integration</span><span class="sep">✦</span>
+      <span>Web Design</span><span class="sep">✦</span>
+      <span>Data Pipelines</span><span class="sep">✦</span>
+      <span>Process Consulting</span><span class="sep">✦</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT WE DO ============ -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-head reveal-up">
+      <span class="eyebrow">What We Do</span>
+      <h2>Every system your business needs to run itself.</h2>
+      <p>From a single automated workflow to a full operational overhaul — we scope, build, and maintain the tools that give you your time back.</p>
+    </div>
+
+    <div class="grid grid-3 services-grid">
+      <div class="card glass-card reveal-up">
+        <div class="card-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M13 2 4 13h6l-1 9 9-11h-6l1-9Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>AI Workflow Automation</h3>
+        <p>We map your repetitive processes and rebuild them as automated pipelines — from lead intake to invoicing to reporting — so nothing depends on someone remembering to do it.</p>
+      </div>
+
+      <div class="card glass-card reveal-up" style="--delay:0.08s">
+        <div class="card-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Custom AI Agents &amp; Chatbots</h3>
+        <p>Purpose-built agents that answer customers, qualify leads, triage support tickets, and pull real answers from your own data — trained on your business, not a generic script.</p>
+      </div>
+
+      <div class="card glass-card reveal-up" style="--delay:0.16s">
+        <div class="card-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="13" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="13" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <h3>Systems Integration</h3>
+        <p>Your CRM, inbox, spreadsheets, and payment tools finally talking to each other — connected through Zapier, Make, or custom APIs so data moves without you touching it.</p>
+      </div>
+
+      <div class="card glass-card reveal-up" style="--delay:0.08s">
+        <div class="card-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 5h16v12H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 20h20M9 20l1-3h4l1 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Web Design &amp; Development</h3>
+        <p>Fast, modern websites built to convert — not just look good. Every site we ship is engineered around your funnel, your speed, and your search visibility.</p>
+      </div>
+
+      <div class="card glass-card reveal-up" style="--delay:0.16s">
+        <div class="card-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Data &amp; Reporting Automation</h3>
+        <p>Live dashboards and scheduled reports that pull straight from your source data — so decisions get made on what's actually happening, updated automatically.</p>
+      </div>
+
+      <div class="card glass-card reveal-up" style="--delay:0.24s">
+        <div class="card-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2 2 7l10 5 10-5-10-5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Ongoing AI Consulting</h3>
+        <p>Retained strategy for teams that want a technical partner in the room — evaluating new AI tools, planning the roadmap, and keeping your stack ahead of the curve.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section section-alt" id="process">
+  <div class="container">
+    <div class="section-head reveal-up">
+      <span class="eyebrow">How It Works</span>
+      <h2>A clear path from audit to autopilot.</h2>
+      <p>No black boxes. Every engagement follows the same disciplined process, so you always know what's happening and why.</p>
+    </div>
+
+    <div class="process-list">
+      <div class="process-item reveal-up">
+        <div class="process-num">01</div>
+        <div class="process-body">
+          <h3>Discover &amp; Audit</h3>
+          <p>We dig into how your business actually runs today — the manual steps, the workarounds, the tools that don't talk to each other — and identify where automation pays off fastest.</p>
+        </div>
+      </div>
+      <div class="process-item reveal-up" style="--delay:0.08s">
+        <div class="process-num">02</div>
+        <div class="process-body">
+          <h3>Design the System</h3>
+          <p>We map the target workflow end-to-end and propose the exact stack — AI, integrations, and interfaces — before a single line of it gets built.</p>
+        </div>
+      </div>
+      <div class="process-item reveal-up" style="--delay:0.16s">
+        <div class="process-num">03</div>
+        <div class="process-body">
+          <h3>Build &amp; Automate</h3>
+          <p>Our team builds the agents, integrations, and interfaces in tight sprints, with working checkpoints along the way instead of a single big reveal.</p>
+        </div>
+      </div>
+      <div class="process-item reveal-up" style="--delay:0.24s">
+        <div class="process-num">04</div>
+        <div class="process-body">
+          <h3>Launch &amp; Train</h3>
+          <p>We ship to production, document everything in plain language, and train your team so the system belongs to you, not just to us.</p>
+        </div>
+      </div>
+      <div class="process-item reveal-up" style="--delay:0.32s">
+        <div class="process-num">05</div>
+        <div class="process-body">
+          <h3>Optimize &amp; Scale</h3>
+          <p>We monitor performance, tune the system against real usage, and layer in the next automation as your business grows into it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO WE HELP ============ -->
+<section class="section" id="industries">
+  <div class="container">
+    <div class="section-head reveal-up">
+      <span class="eyebrow">Who We Help</span>
+      <h2>Built for any industry running on manual work.</h2>
+      <p>If your team is copy-pasting between tabs, chasing follow-ups by hand, or building reports at midnight — we've probably automated that exact problem before.</p>
+    </div>
+  </div>
+
+  <div class="marquee-strip industries-marquee">
+    <div class="marquee-track marquee-reverse">
+      <div class="marquee-group industry-group">
+        <span class="industry-pill">E-commerce &amp; Retail</span>
+        <span class="industry-pill">Real Estate</span>
+        <span class="industry-pill">Healthcare &amp; Wellness</span>
+        <span class="industry-pill">Legal &amp; Professional Services</span>
+        <span class="industry-pill">Marketing Agencies</span>
+        <span class="industry-pill">SaaS &amp; Tech</span>
+        <span class="industry-pill">Finance &amp; Accounting</span>
+        <span class="industry-pill">Logistics &amp; Supply Chain</span>
+        <span class="industry-pill">Hospitality</span>
+      </div>
+      <div class="marquee-group industry-group" aria-hidden="true">
+        <span class="industry-pill">E-commerce &amp; Retail</span>
+        <span class="industry-pill">Real Estate</span>
+        <span class="industry-pill">Healthcare &amp; Wellness</span>
+        <span class="industry-pill">Legal &amp; Professional Services</span>
+        <span class="industry-pill">Marketing Agencies</span>
+        <span class="industry-pill">SaaS &amp; Tech</span>
+        <span class="industry-pill">Finance &amp; Accounting</span>
+        <span class="industry-pill">Logistics &amp; Supply Chain</span>
+        <span class="industry-pill">Hospitality</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY US ============ -->
+<section class="section section-alt" id="why-us">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-copy reveal-up">
+        <span class="eyebrow">Why Loomx</span>
+        <h2>We build for outcomes, not for demos.</h2>
+        <p>Plenty of agencies can wire up a chatbot. We stay accountable to the number that matters — hours saved, leads converted, revenue recovered — and we build systems your team can actually run without us.</p>
+
+        <ul class="why-list">
+          <li><span class="check">✓</span> Senior engineers on every build — no outsourced junior teams</li>
+          <li><span class="check">✓</span> Fixed-scope pricing with no surprise invoices</li>
+          <li><span class="check">✓</span> You own the code, the accounts, and the documentation</li>
+          <li><span class="check">✓</span> Average first automation live within 2 weeks</li>
+        </ul>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card glass-card reveal-up">
+          <div class="stat-number" data-count="500" data-suffix="+">0</div>
+          <div class="stat-label">Hours saved monthly for clients</div>
+        </div>
+        <div class="stat-card glass-card reveal-up" style="--delay:0.08s">
+          <div class="stat-number" data-count="40" data-suffix="+">0</div>
+          <div class="stat-label">Workflows automated to date</div>
+        </div>
+        <div class="stat-card glass-card reveal-up" style="--delay:0.16s">
+          <div class="stat-number" data-count="98" data-suffix="%">0</div>
+          <div class="stat-label">Client retention rate</div>
+        </div>
+        <div class="stat-card glass-card reveal-up" style="--delay:0.24s">
+          <div class="stat-number" data-count="2" data-suffix=" wks">0</div>
+          <div class="stat-label">Average time to first launch</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASE STUDY ============ -->
+<section class="section" id="case-study">
+  <div class="container">
+    <div class="section-head reveal-up">
+      <span class="eyebrow">Case Study</span>
+      <h2>From 12 hours a week of manual ops to zero.</h2>
+    </div>
+
+    <div class="case-study-card glass-card reveal-up">
+      <div class="case-tag">E-commerce · Fulfillment &amp; Support</div>
+      <h3>How a 14-person DTC brand automated order support and cut response time by 90%</h3>
+      <p>Their team was manually triaging every support ticket, order update, and return request across three disconnected tools. We built an AI agent that reads incoming tickets, pulls live order data, drafts responses, and only escalates the edge cases — backed by an automated returns workflow synced straight to their inventory system.</p>
+
+      <div class="case-metrics">
+        <div class="case-metric">
+          <span class="metric-value" data-count="90" data-suffix="%">0</span>
+          <span class="metric-label">Faster response time</span>
+        </div>
+        <div class="case-metric">
+          <span class="metric-value" data-count="12" data-suffix="hrs/wk">0</span>
+          <span class="metric-label">Manual work removed</span>
+        </div>
+        <div class="case-metric">
+          <span class="metric-value" data-count="3" data-suffix="x">0</span>
+          <span class="metric-label">Support capacity without hiring</span>
+        </div>
+      </div>
+
+      <a href="#contact" class="btn btn-ghost">
+        Get results like this for your team
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="section section-alt" id="pricing">
+  <div class="container">
+    <div class="section-head reveal-up">
+      <span class="eyebrow">Engagement Models</span>
+      <h2>Simple pricing, scoped to what you actually need.</h2>
+      <p>Every engagement starts with a free audit — you'll know the exact scope and price before anything is signed.</p>
+    </div>
+
+    <div class="grid grid-3 pricing-grid">
+      <div class="card pricing-card glass-card reveal-up">
+        <h3>Starter Automation</h3>
+        <p class="pricing-desc">For one clear bottleneck you want gone.</p>
+        <div class="price"><span class="price-amount">From $2,500</span><span class="price-period">one-time</span></div>
+        <ul class="pricing-features">
+          <li>1 automated workflow or integration</li>
+          <li>Discovery &amp; process mapping</li>
+          <li>Build, test, and launch</li>
+          <li>Documentation &amp; handoff training</li>
+          <li>30 days of post-launch support</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline btn-block">Start Here</a>
+      </div>
+
+      <div class="card pricing-card glass-card featured reveal-up" style="--delay:0.08s">
+        <div class="featured-badge">Most Popular</div>
+        <h3>Growth Partner</h3>
+        <p class="pricing-desc">Ongoing automation as your operations evolve.</p>
+        <div class="price"><span class="price-amount">From $4,800</span><span class="price-period">/ month</span></div>
+        <ul class="pricing-features">
+          <li>Everything in Starter</li>
+          <li>Multiple workflows &amp; AI agents</li>
+          <li>Systems integration across your stack</li>
+          <li>Monthly optimization &amp; reporting</li>
+          <li>Priority support &amp; strategy calls</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary btn-block">Book a Free Audit</a>
+      </div>
+
+      <div class="card pricing-card glass-card reveal-up" style="--delay:0.16s">
+        <h3>Enterprise / Custom</h3>
+        <p class="pricing-desc">For complex operations and larger teams.</p>
+        <div class="price"><span class="price-amount">Custom</span><span class="price-period">scoped</span></div>
+        <ul class="pricing-features">
+          <li>Full operational audit</li>
+          <li>Custom AI agent &amp; platform development</li>
+          <li>Dedicated engineering &amp; PM team</li>
+          <li>SLA-backed support</li>
+          <li>Security &amp; compliance review</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline btn-block">Talk to Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="container container-narrow">
+    <div class="section-head reveal-up">
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions we hear before every kickoff.</h2>
+    </div>
+
+    <div class="faq-list reveal-up">
+      <details class="faq-item" open>
+        <summary>
+          <span>Do we need to already be "AI-ready" to work with you?</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>No. Most clients start with spreadsheets, email, and disconnected tools. Our job is to meet you where you are, find the highest-leverage automation, and build from there — no existing AI infrastructure required.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>
+          <span>How long does a typical project take?</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>A single automated workflow typically launches within 1–2 weeks of kickoff. Larger, multi-system builds usually run 4–8 weeks, scoped in sprints so you see working pieces along the way, not just a final reveal.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>
+          <span>What tools and platforms do you work with?</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>We work across your existing stack — common CRMs, help desks, e-commerce platforms, spreadsheets, and databases — connected via Zapier, Make, or custom API integrations, plus leading AI models where they add real value.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>
+          <span>Who owns the systems once they're built?</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>You do. Every account, integration, and line of documentation is handed over at launch. We're not a black box you're locked into — Growth Partner clients keep us on retainer because they want to, not because they have to.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>
+          <span>What does the free audit actually involve?</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>A 30-minute call where we walk through your current workflows, flag the biggest time-sinks, and outline what an automated version would look like — plus a rough scope and price. No obligation, no generic pitch deck.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>
+          <span>Is our data secure?</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>Yes. We follow least-privilege access on every integration, never train external models on your proprietary data without explicit agreement, and can work within your existing compliance requirements for regulated industries.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT / CTA ============ -->
+<section class="section contact-section" id="contact">
+  <div class="contact-glow"></div>
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-copy reveal-up">
+        <span class="eyebrow">Get Started</span>
+        <h2>Let's find the hours hiding in your business.</h2>
+        <p>Book a free 30-minute audit. We'll show you exactly where automation pays off first — no pressure, no generic pitch.</p>
+
+        <div class="contact-detail">
+          <span class="contact-label">Email</span>
+          <a href="mailto:hello@loomx.ai">hello@loomx.ai</a>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-label">Response time</span>
+          <span>Within 1 business day</span>
+        </div>
+      </div>
+
+      <form class="contact-form glass-card reveal-up" id="contactForm" style="--delay:0.1s">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required placeholder="Jane Cooper">
+          </div>
+          <div class="form-group">
+            <label for="email">Work Email</label>
+            <input type="email" id="email" name="email" required placeholder="jane@company.com">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" placeholder="Company name">
+          </div>
+          <div class="form-group">
+            <label for="budget">Monthly Budget</label>
+            <select id="budget" name="budget">
+              <option value="">Select a range</option>
+              <option>Under $2,500</option>
+              <option>$2,500 – $5,000</option>
+              <option>$5,000 – $15,000</option>
+              <option>$15,000+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">What's slowing you down?</label>
+          <textarea id="message" name="message" rows="4" required placeholder="Tell us about the process you'd love to never touch again..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBtn">
+          <span class="btn-label">Book a Free Audit</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <p class="form-note" id="formNote">We'll reply within one business day. No spam, ever.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="logo">
+          <span class="logo-text">loom<span class="logo-x">x</span></span>
+        </a>
+        <p>We automate the work that slows you down.</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#services">What We Do</a>
+          <a href="#process">How It Works</a>
+          <a href="#why-us">Why Us</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="#case-study">Case Studies</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="mailto:hello@loomx.ai">hello@loomx.ai</a>
+          <a href="#" aria-label="LinkedIn">LinkedIn</a>
+          <a href="#" aria-label="Twitter / X">Twitter / X</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year"></span> Loomx. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="#top" class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4 7l4-4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+
+<script src="js/main.js"></script>
+</body>
+</html>
