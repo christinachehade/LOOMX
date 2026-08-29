@@ -637,17 +637,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 
 .card { padding: 34px 30px; }
-.card-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, rgba(67, 96, 224, 0.15), rgba(67, 96, 224, 0.15));
-  color: var(--accent);
-  margin-bottom: 22px;
-}
 .card h3 {
   font-size: 20px;
   font-weight: 700;
@@ -655,6 +644,89 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   margin-bottom: 12px;
 }
 .card p { color: var(--text-dim); font-size: 15.5px; }
+
+/* =========================================================
+   What We Do - two service groups
+   "How we build" runs research through shipped product; "The AI
+   layer" is a set of parallel entry points, tinted so the two read
+   as different kinds of engagement rather than one flat list.
+========================================================= */
+
+.svc-group + .svc-group { margin-top: 64px; }
+
+.svc-group-head {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.svc-group-head h3 {
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.svc-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.svc-card {
+  position: relative;
+  overflow: hidden;
+  padding: 30px 28px 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+  transition: border-color 0.3s var(--ease-soft),
+              transform 0.3s var(--ease-soft),
+              box-shadow 0.3s var(--ease-soft);
+}
+.svc-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0.28;
+  transition: opacity 0.3s var(--ease-soft);
+}
+.svc-card:hover {
+  border-color: rgba(67, 96, 224, 0.34);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 42px -28px rgba(20, 22, 43, 0.42);
+}
+.svc-card:hover::before { opacity: 1; }
+
+/* The AI layer sits on a faint wash so it reads as a distinct offer. */
+.svc-card-ai {
+  background:
+    linear-gradient(180deg, rgba(var(--accent-ambient), 0.07), transparent 55%),
+    var(--bg);
+}
+
+.svc-name {
+  font-size: 19.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  text-wrap: balance;
+}
+.svc-desc {
+  color: var(--text-dim);
+  font-size: 15.5px;
+  line-height: 1.62;
+}
+/* Marks the low-commitment entry point without a separate badge. */
+.svc-lead {
+  color: var(--accent);
+  font-weight: 600;
+}
 
 /* =========================================================
    Process
@@ -1044,4 +1116,9 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   .buyer-lead-name { font-size: 19px; }
   .buyer-index { grid-template-columns: repeat(2, 1fr); column-gap: 20px; }
   .buyer-index-item { font-size: 14.5px; padding: 14px 2px 13px; }
+
+  .svc-group + .svc-group { margin-top: 48px; }
+  .svc-group-head { gap: 14px; margin-bottom: 22px; }
+  .svc-group-head h3 { font-size: 22px; }
+  .svc-card { padding: 26px 24px 28px; }
 }
