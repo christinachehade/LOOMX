@@ -7,9 +7,9 @@
   --bg: #ffffff;
   --bg-alt: #f6f7fb;
   --bg-elevated: #ffffff;
-  --accent: #5a7aff;
-  --accent-2: #5a7aff;
-  --accent-soft: rgba(90, 122, 255, 0.08);
+  --accent: #4360e0;
+  --accent-2: #4360e0;
+  --accent-soft: rgba(67, 96, 224, 0.08);
   --text: #14162b;
   --text-dim: #565b73;
   --text-faint: #6b7280;
@@ -100,7 +100,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   border-radius: 50%;
   pointer-events: none;
   z-index: 1;
-  background: radial-gradient(circle, rgba(90, 122, 255, 0.16) 0%, rgba(90, 122, 255, 0.08) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(67, 96, 224, 0.16) 0%, rgba(67, 96, 224, 0.08) 45%, transparent 70%);
   transform: translate(-50%, -50%);
   filter: blur(10px);
   opacity: 0;
@@ -157,11 +157,11 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 .btn-primary {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: #ffffff;
-  box-shadow: 0 0 0 rgba(90, 122, 255, 0);
+  box-shadow: 0 0 0 rgba(67, 96, 224, 0);
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px -8px rgba(90, 122, 255, 0.45);
+  box-shadow: 0 12px 28px -8px rgba(67, 96, 224, 0.45);
 }
 
 .btn-ghost {
@@ -294,7 +294,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   width: 900px;
   height: 900px;
   max-width: 160vw;
-  background: radial-gradient(circle, rgba(90, 122, 255, 0.14) 0%, rgba(90, 122, 255, 0.06) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(67, 96, 224, 0.14) 0%, rgba(67, 96, 224, 0.06) 40%, transparent 70%);
   filter: blur(40px);
   z-index: 0;
   pointer-events: none;
@@ -548,8 +548,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 .glass-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(90, 122, 255, 0.3);
-  box-shadow: 0 24px 48px -20px rgba(90, 122, 255, 0.22), 0 4px 14px rgba(20, 22, 43, 0.06);
+  border-color: rgba(67, 96, 224, 0.3);
+  box-shadow: 0 24px 48px -20px rgba(67, 96, 224, 0.22), 0 4px 14px rgba(20, 22, 43, 0.06);
 }
 
 .card { padding: 34px 30px; }
@@ -560,7 +560,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(90, 122, 255, 0.15), rgba(90, 122, 255, 0.15));
+  background: linear-gradient(135deg, rgba(67, 96, 224, 0.15), rgba(67, 96, 224, 0.15));
   color: var(--accent);
   margin-bottom: 22px;
 }
@@ -736,8 +736,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 
 .pricing-card.featured {
-  border-color: rgba(90, 122, 255, 0.4);
-  background: linear-gradient(180deg, rgba(90, 122, 255, 0.06), rgba(90, 122, 255, 0.03));
+  border-color: rgba(67, 96, 224, 0.4);
+  background: linear-gradient(180deg, rgba(67, 96, 224, 0.06), rgba(67, 96, 224, 0.03));
   transform: scale(1.02);
 }
 .featured-badge {
@@ -766,7 +766,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   padding: 6px 26px;
   transition: border-color 0.25s, background 0.25s;
 }
-.faq-item[open] { border-color: rgba(90, 122, 255, 0.3); background: var(--glass-hover); }
+.faq-item[open] { border-color: rgba(67, 96, 224, 0.3); background: var(--glass-hover); }
 .faq-item summary {
   list-style: none;
   display: flex;
@@ -807,7 +807,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   transform: translateX(-50%);
   width: 1000px;
   height: 700px;
-  background: radial-gradient(circle, rgba(90, 122, 255, 0.1), transparent 65%);
+  background: radial-gradient(circle, rgba(67, 96, 224, 0.1), transparent 65%);
   filter: blur(40px);
   pointer-events: none;
 }
@@ -850,7 +850,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 .form-group textarea:focus {
   outline: none;
   border-color: var(--accent);
-  background: rgba(90, 122, 255, 0.04);
+  background: rgba(67, 96, 224, 0.04);
 }
 .form-group select { color-scheme: light; }
 .form-group input::placeholder,
