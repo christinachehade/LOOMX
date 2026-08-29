@@ -329,11 +329,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 .hero-title .line {
   display: block;
-  /* overflow:hidden drives the word-reveal, so the box needs room for
-     Playfair's deep descenders; the negative margin keeps line rhythm. */
   overflow: hidden;
-  padding-bottom: 0.26em;
-  margin-bottom: -0.18em;
+  padding-bottom: 0.08em;
 }
 .hero-title .word {
   display: inline-block;
@@ -341,11 +338,10 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   transform: translateY(110%) rotate(3deg);
   animation: word-up 0.9s var(--ease) forwards;
 }
+/* Plain color, not background-clip:text — a clipped background only
+   fills the inline box, which leaves descenders (the "g") unpainted. */
 .accent-word {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--accent);
 }
 @keyframes word-up {
   to { opacity: 1; transform: translateY(0) rotate(0deg); }
@@ -646,10 +642,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   font-size: 42px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--accent);
   margin-bottom: 8px;
   font-variant-numeric: tabular-nums;
 }
