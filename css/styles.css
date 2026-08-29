@@ -273,7 +273,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 140px 0 80px;
+  /* Bottom padding clears the absolutely-positioned scroll indicator. */
+  padding: 140px 0 140px;
   overflow: hidden;
 }
 
