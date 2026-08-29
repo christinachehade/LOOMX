@@ -170,9 +170,9 @@
     let width, height, dpr;
 
     const colors = [
-      "rgba(79, 95, 224, 0.16)",
-      "rgba(124, 92, 240, 0.14)",
-      "rgba(79, 95, 224, 0.10)",
+      "rgba(90, 122, 255, 0.16)",
+      "rgba(90, 122, 255, 0.14)",
+      "rgba(90, 122, 255, 0.10)",
     ];
 
     function resize() {
@@ -240,7 +240,7 @@
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
         ctx.beginPath();
-        ctx.fillStyle = `rgba(79, 95, 224, ${p.alpha})`;
+        ctx.fillStyle = `rgba(90, 122, 255, ${p.alpha})`;
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fill();
       });
