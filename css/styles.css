@@ -458,11 +458,13 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 34s linear infinite;
+  /* Slow: the strip is ~3x longer than it was, so the duration scales
+     with it to keep the drift subtle rather than speeding up. */
+  animation: marquee-scroll 95s linear infinite;
 }
 .marquee-track.marquee-reverse {
   animation-name: marquee-scroll-reverse;
-  animation-duration: 40s;
+  animation-duration: 105s;
 }
 .marquee-strip:hover .marquee-track { animation-play-state: paused; }
 
@@ -478,18 +480,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 .marquee-group .sep { color: var(--accent); opacity: 0.6; font-size: 12px; }
 
-.industries-marquee { background: var(--bg); border-top: none; padding: 8px 0 40px; }
-.industry-pill {
-  padding: 10px 22px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--glass);
-  margin-right: 14px;
-  font-size: 14.5px;
-  color: var(--text-dim);
-  transition: border-color 0.2s, color 0.2s;
-}
-
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -497,6 +487,96 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 @keyframes marquee-scroll-reverse {
   from { transform: translateX(-50%); }
   to { transform: translateX(0); }
+}
+
+/* Reduced motion: hold the strip still and let it be scrolled by hand
+   rather than letting the global animation shortcut jump it off-centre. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+    width: auto;
+  }
+  .marquee-track .marquee-group:last-child { display: none; }
+  .marquee-strip { overflow-x: auto; }
+  .marquee-strip::before,
+  .marquee-strip::after { display: none; }
+}
+
+/* =========================================================
+   Who We Help - static buyer grid
+   Two tiers: four lead cards, then an editorial index of the rest.
+   Deliberately not a marquee - this is where a visitor finds
+   themselves, so every item stays visible and still.
+========================================================= */
+
+.buyer-lead {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 46px;
+}
+.buyer-lead-item {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  min-height: 132px;
+  padding: 24px 22px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(180deg, rgba(var(--accent-ambient), 0.05), transparent 62%),
+    var(--bg);
+  transition: border-color 0.3s var(--ease-soft),
+              transform 0.3s var(--ease-soft),
+              box-shadow 0.3s var(--ease-soft);
+}
+/* Accent rule along the top edge, clipped to the card's rounded corners. */
+.buyer-lead-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0.3;
+  transition: opacity 0.3s var(--ease-soft);
+}
+.buyer-lead-item:hover {
+  border-color: rgba(67, 96, 224, 0.34);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 38px -26px rgba(20, 22, 43, 0.4);
+}
+.buyer-lead-item:hover::before { opacity: 1; }
+
+.buyer-lead-name {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+/* Remaining buyers as an index: hairline rules, no boxes, so a ragged
+   final row reads as intentional rather than as gaps in a grid. */
+.buyer-index {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 34px;
+}
+.buyer-index-item {
+  border-top: 1px solid var(--border);
+  padding: 16px 2px 15px;
+  font-size: 15.5px;
+  color: var(--text-dim);
+  transition: color 0.22s var(--ease-soft), border-color 0.22s var(--ease-soft);
+}
+.buyer-index-item:hover {
+  color: var(--text);
+  border-top-color: var(--accent);
 }
 
 /* =========================================================
@@ -927,6 +1007,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   .grid-3 { grid-template-columns: 1fr 1fr; }
   .footer-top { grid-template-columns: 1fr; }
   .footer-links { grid-template-columns: repeat(3, 1fr); }
+  .buyer-lead { grid-template-columns: repeat(2, 1fr); }
+  .buyer-index { grid-template-columns: repeat(3, 1fr); column-gap: 26px; }
 }
 
 @media (max-width: 760px) {
@@ -956,4 +1038,10 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   .hero { padding-top: 120px; }
   .case-study-card { padding: 32px 24px; }
   .section { padding: 88px 0; }
+
+  .buyer-lead { grid-template-columns: 1fr; gap: 12px; margin-bottom: 36px; }
+  .buyer-lead-item { min-height: 0; padding: 20px 20px 18px; }
+  .buyer-lead-name { font-size: 19px; }
+  .buyer-index { grid-template-columns: repeat(2, 1fr); column-gap: 20px; }
+  .buyer-index-item { font-size: 14.5px; padding: 14px 2px 13px; }
 }
