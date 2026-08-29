@@ -219,7 +219,7 @@
       t += 0.01;
       ctx.clearRect(0, 0, width, height);
 
-      // gradient mesh blobs — soft pastel washes over the white background
+      // gradient mesh blobs: soft pastel washes over the white background
       ctx.globalCompositeOperation = "source-over";
       blobs.forEach((b) => {
         const x = (b.baseX + Math.sin(t * b.speed + b.offset) * b.driftX) * width;
@@ -313,10 +313,10 @@
       submitBtn.disabled = true;
       label.textContent = "Sending...";
 
-      // Simulated send — wire this up to your backend / form endpoint.
+      // Simulated send. Wire this up to your backend / form endpoint.
       setTimeout(() => {
         label.textContent = "Request Sent ✓";
-        note.textContent = "Thanks — we'll reach out within one business day.";
+        note.textContent = "Thanks, we'll reach out within one business day.";
         note.style.color = "var(--success)";
         form.reset();
         setTimeout(() => {
