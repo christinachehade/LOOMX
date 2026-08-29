@@ -169,10 +169,13 @@
     const ctx = canvas.getContext("2d");
     let width, height, dpr;
 
+    // Lighter than the accent and kept faint, so the hero background
+    // reads as atmosphere rather than a second brand colour.
+    const AMBIENT = "140, 165, 255";
     const colors = [
-      "rgba(67, 96, 224, 0.16)",
-      "rgba(67, 96, 224, 0.14)",
-      "rgba(67, 96, 224, 0.10)",
+      `rgba(${AMBIENT}, 0.11)`,
+      `rgba(${AMBIENT}, 0.09)`,
+      `rgba(${AMBIENT}, 0.06)`,
     ];
 
     function resize() {
@@ -205,7 +208,7 @@
         r: 0.6 + Math.random() * 1.6,
         vx: (Math.random() - 0.5) * 0.15,
         vy: (Math.random() - 0.5) * 0.15,
-        alpha: 0.12 + Math.random() * 0.22,
+        alpha: 0.08 + Math.random() * 0.16,
       }));
     }
 
@@ -240,7 +243,7 @@
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
         ctx.beginPath();
-        ctx.fillStyle = `rgba(67, 96, 224, ${p.alpha})`;
+        ctx.fillStyle = `rgba(${AMBIENT}, ${p.alpha})`;
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fill();
       });
