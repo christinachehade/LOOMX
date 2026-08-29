@@ -741,95 +741,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   font-weight: 600;
 }
 
-/* Closing CTA: a distinct panel rather than loose text, so it reads as
-   a deliberate destination at the end of the section. Uses the same
-   surface language as the cards above it. */
-.svc-closer {
-  position: relative;
-  overflow: hidden;
-  margin-top: 76px;
-  padding: 56px 40px 52px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background:
-    linear-gradient(180deg, rgba(var(--accent-ambient), 0.09), transparent 70%),
-    var(--bg-alt);
-}
-.svc-closer::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--accent);
-  opacity: 0.4;
-}
-/* Soft ambient bloom behind the button, matching the hero and contact
-   glows so the panel belongs to the same system. */
-.svc-closer-glow {
-  position: absolute;
-  left: 50%;
-  bottom: -55%;
-  width: 560px;
-  max-width: 120%;
-  aspect-ratio: 1;
-  transform: translateX(-50%);
-  background: radial-gradient(circle, rgba(var(--accent-ambient), 0.16), transparent 65%);
-  filter: blur(30px);
-  pointer-events: none;
-}
-.svc-closer-inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.svc-closer-text {
-  font-family: var(--font-display);
-  font-size: clamp(23px, 2.8vw, 30px);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
-  color: var(--text);
-}
-.svc-closer-sub {
-  margin-top: 12px;
-  max-width: 48ch;
-  color: var(--text-dim);
-  font-size: 16px;
-}
-.svc-closer .btn { margin-top: 28px; }
-
-/* Reassurance row: answers "what am I signing up for?" at the moment
-   of the click, using the same commitments stated elsewhere on the page. */
-.svc-closer-meta {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 8px 18px;
-  margin-top: 20px;
-  font-size: 13.5px;
-  color: var(--text-faint);
-}
-.svc-closer-meta li {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-.svc-closer-meta li:not(:last-child)::after {
-  content: "";
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: currentColor;
-  opacity: 0.5;
-}
-
 /* =========================================================
    Process
 ========================================================= */
@@ -1223,15 +1134,4 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   .svc-group-head { gap: 14px; margin-bottom: 22px; }
   .svc-group-head h3 { font-size: 22px; }
   .svc-card { padding: 26px 24px 28px; }
-  .svc-closer { margin-top: 52px; padding: 40px 22px 38px; }
-  .svc-closer .btn-lg { width: 100%; max-width: 320px; }
-  .svc-closer-sub { font-size: 15px; }
-  /* Stack the row rather than let it wrap, which would strand a
-     separator dot at the end of the first line. */
-  .svc-closer-meta {
-    flex-direction: column;
-    gap: 7px;
-    font-size: 13px;
-  }
-  .svc-closer-meta li:not(:last-child)::after { display: none; }
 }
