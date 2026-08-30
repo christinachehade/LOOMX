@@ -745,34 +745,115 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
    Process
 ========================================================= */
 
-.process-list {
-  max-width: 760px;
+.proc {
+  max-width: 820px;
   margin: 0 auto;
+}
+.proc-prompt {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 15.5px;
+  margin-bottom: 20px;
+}
+
+/* Tabs wrap rather than scroll, so no option is ever hidden off-edge. */
+.proc-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+.proc-tab {
+  padding: 11px 21px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-dim);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color 0.22s var(--ease-soft), border-color 0.22s var(--ease-soft),
+              background 0.22s var(--ease-soft), box-shadow 0.22s var(--ease-soft);
+}
+.proc-tab:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.proc-tab[aria-selected="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 10px 24px -12px rgba(67, 96, 224, 0.55);
+}
+
+.proc-panel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+  border-radius: var(--radius-sm);
+}
+.proc-panel[hidden] { display: none; }
+.proc-panel:not([hidden]) { animation: proc-fade 0.32s var(--ease) both; }
+@keyframes proc-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .proc-panel:not([hidden]) { animation: none; }
+}
+
+/* Ordered list for semantics (these are sequential steps), but the
+   visible numbering is the "01" label, so suppress native markers. */
+.proc-steps {
   display: flex;
   flex-direction: column;
+  list-style: none;
 }
-.process-item {
-  display: flex;
-  gap: 28px;
-  padding: 32px 0;
+.proc-step {
+  padding: 26px 0;
   border-top: 1px solid var(--border);
 }
-.process-item:last-child { border-bottom: 1px solid var(--border); }
-.process-num {
-  font-size: 15px;
-  font-weight: 800;
+.proc-step:last-child { border-bottom: 1px solid var(--border); }
+.proc-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 7px;
+}
+.proc-num {
   color: var(--accent);
-  font-variant-numeric: tabular-nums;
-  padding-top: 2px;
-  min-width: 40px;
-}
-.process-body h3 {
-  font-size: 21px;
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: -0.01em;
-  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
 }
-.process-body p { color: var(--text-dim); font-size: 16px; max-width: 56ch; }
+.proc-sep { color: var(--text-faint); }
+.proc-title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.proc-desc {
+  color: var(--text-dim);
+  font-size: 16px;
+  max-width: 62ch;
+}
+
+.proc-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+  margin-top: 44px;
+}
+.proc-cta-text {
+  color: var(--text-dim);
+  font-size: 16px;
+  max-width: 46ch;
+}
 
 /* =========================================================
    Why us
@@ -1134,4 +1215,12 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   .svc-group-head { gap: 14px; margin-bottom: 22px; }
   .svc-group-head h3 { font-size: 22px; }
   .svc-card { padding: 26px 24px 28px; }
+
+  .proc-tabs { gap: 8px; margin-bottom: 30px; }
+  .proc-tab { padding: 10px 16px; font-size: 13.5px; }
+  .proc-step { padding: 22px 0; }
+  .proc-title { font-size: 18px; }
+  .proc-desc { font-size: 15.5px; }
+  .proc-cta { margin-top: 36px; }
+  .proc-cta .btn { width: 100%; max-width: 320px; }
 }

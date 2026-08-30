@@ -295,6 +295,48 @@
   }
 
   /* =========================================================
+     How It Works: tabs (WAI-ARIA tabs pattern)
+     Roving tabindex so Tab enters/leaves the set once, and arrow
+     keys move between tabs. Panels are toggled with [hidden] so
+     inactive content is hidden from assistive tech, not just
+     visually.
+  ========================================================= */
+  function initProcessTabs() {
+    const tablist = document.querySelector(".proc-tabs");
+    if (!tablist) return;
+    const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+    if (!tabs.length) return;
+
+    function select(index, { focus = true } = {}) {
+      tabs.forEach((tab, i) => {
+        const active = i === index;
+        tab.setAttribute("aria-selected", String(active));
+        tab.tabIndex = active ? 0 : -1;
+        const panel = document.getElementById(tab.getAttribute("aria-controls"));
+        if (panel) panel.hidden = !active;
+      });
+      if (focus) tabs[index].focus();
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => select(i, { focus: false }));
+    });
+
+    tablist.addEventListener("keydown", (e) => {
+      const current = tabs.indexOf(document.activeElement);
+      if (current === -1) return;
+      let next = null;
+      if (e.key === "ArrowRight") next = (current + 1) % tabs.length;
+      else if (e.key === "ArrowLeft") next = (current - 1 + tabs.length) % tabs.length;
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = tabs.length - 1;
+      if (next === null) return;
+      e.preventDefault();
+      select(next);
+    });
+  }
+
+  /* =========================================================
      Contact form (client-side only demo submit)
   ========================================================= */
   function initContactForm() {
@@ -343,6 +385,7 @@
     initCounters();
     initCursorOrb();
     initMeshCanvas();
+    initProcessTabs();
     initContactForm();
     initFooterYear();
   });

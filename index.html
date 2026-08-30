@@ -194,50 +194,109 @@
   </div>
 </section>
 
-<!-- ============ HOW IT WORKS ============ -->
+<!-- ============ HOW IT WORKS (tabbed engagement paths) ============ -->
 <section class="section section-alt" id="process">
   <div class="container">
     <div class="section-head reveal-up">
       <span class="eyebrow">How It Works</span>
-      <h2>A clear path from audit to autopilot.</h2>
-      <p>No black boxes. Every engagement follows the same disciplined process, so you always know what's happening and why, without disrupting patient care.</p>
+      <h2>How we work depends on what you need.</h2>
+      <p>Every engagement starts with discovery. Some clients want strategy and a clear direction. Others want us to design, build, and ship the whole system. You decide how far we go.</p>
     </div>
 
-    <div class="process-list">
-      <div class="process-item reveal-up">
-        <div class="process-num">01</div>
-        <div class="process-body">
-          <h3>Discover &amp; Audit</h3>
-          <p>We dig into how your practice actually runs today: the manual intake, the scheduling gaps, the tools that don't talk to each other. Then we identify where automation pays off fastest.</p>
+    <div class="proc reveal-up">
+      <p class="proc-prompt" id="proc-prompt">Pick the kind of engagement to see the exact path it follows.</p>
+
+      <div class="proc-tabs" role="tablist" aria-labelledby="proc-prompt">
+        <button type="button" class="proc-tab" role="tab" id="proc-tab-1" aria-controls="proc-panel-1" aria-selected="true" tabindex="0">Research &amp; Strategy</button>
+        <button type="button" class="proc-tab" role="tab" id="proc-tab-2" aria-controls="proc-panel-2" aria-selected="false" tabindex="-1">Design &amp; Build</button>
+        <button type="button" class="proc-tab" role="tab" id="proc-tab-3" aria-controls="proc-panel-3" aria-selected="false" tabindex="-1">AI &amp; Automation</button>
+        <button type="button" class="proc-tab" role="tab" id="proc-tab-4" aria-controls="proc-panel-4" aria-selected="false" tabindex="-1">Something Custom</button>
+      </div>
+
+      <div class="proc-panels">
+        <div class="proc-panel" role="tabpanel" id="proc-panel-1" aria-labelledby="proc-tab-1" tabindex="0">
+          <ol class="proc-steps">
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">01</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Discover</span></p>
+              <p class="proc-desc">We learn how things work today, through interviews, observation, and workflow mapping.</p>
+            </li>
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">02</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Analyze</span></p>
+              <p class="proc-desc">We find the friction, the gaps, and the highest-value opportunities.</p>
+            </li>
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">03</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Strategy &amp; Direction</span></p>
+              <p class="proc-desc">You get a clear, prioritized plan of exactly what to do and why, ready to act on with us or anyone.</p>
+            </li>
+          </ol>
+        </div>
+
+        <div class="proc-panel" role="tabpanel" id="proc-panel-2" aria-labelledby="proc-tab-2" tabindex="0" hidden>
+          <ol class="proc-steps">
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">01</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Discover &amp; Research</span></p>
+              <p class="proc-desc">We ground the work in real workflows before a single screen is designed.</p>
+            </li>
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">02</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Design</span></p>
+              <p class="proc-desc">Interfaces, portals, and the full experience, built around the people who use them.</p>
+            </li>
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">03</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Build &amp; Ship</span></p>
+              <p class="proc-desc">Built in sprints with checkpoints, tested, and launched. We never touch live patient data until it's ready.</p>
+            </li>
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">04</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Launch &amp; Train</span></p>
+              <p class="proc-desc">We roll out, document in plain language, and train your team so the system is yours.</p>
+            </li>
+          </ol>
+        </div>
+
+        <div class="proc-panel" role="tabpanel" id="proc-panel-3" aria-labelledby="proc-tab-3" tabindex="0" hidden>
+          <ol class="proc-steps">
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">01</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Audit</span></p>
+              <p class="proc-desc">We map where AI actually pays off in your workflow, and where it doesn't.</p>
+            </li>
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">02</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Set Up &amp; Automate</span></p>
+              <p class="proc-desc">Tools, prompts, and automations put in place and wired into how you already work.</p>
+            </li>
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">03</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Train Your Team</span></p>
+              <p class="proc-desc">Your staff learn to run it confidently, so it sticks after we step back.</p>
+            </li>
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">04</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Support &amp; Iterate</span></p>
+              <p class="proc-desc">We tune against real use and layer in the next automation as you grow.</p>
+            </li>
+          </ol>
+        </div>
+
+        <div class="proc-panel" role="tabpanel" id="proc-panel-4" aria-labelledby="proc-tab-4" tabindex="0" hidden>
+          <ol class="proc-steps">
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">01</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Tell Us the Problem</span></p>
+              <p class="proc-desc">Not sure which track fits? We start from the problem, not a fixed package.</p>
+            </li>
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">02</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Shape the Engagement</span></p>
+              <p class="proc-desc">We scope something around your goal, budget, and timeline, at whatever depth makes sense.</p>
+            </li>
+            <li class="proc-step">
+              <p class="proc-head"><span class="proc-num">03</span><span class="proc-sep" aria-hidden="true">&middot;</span><span class="proc-title">Go From There</span></p>
+              <p class="proc-desc">Research, design, build, AI, or a mix. The path is built to fit, and a free audit is always the first step.</p>
+            </li>
+          </ol>
         </div>
       </div>
-      <div class="process-item reveal-up" style="--delay:0.08s">
-        <div class="process-num">02</div>
-        <div class="process-body">
-          <h3>Design the System</h3>
-          <p>We map the target workflow end-to-end and propose the exact stack of AI, integrations, and interfaces, with your compliance requirements built in from day one.</p>
-        </div>
-      </div>
-      <div class="process-item reveal-up" style="--delay:0.16s">
-        <div class="process-num">03</div>
-        <div class="process-body">
-          <h3>Build &amp; Automate</h3>
-          <p>Our team builds the agents, integrations, and interfaces in tight sprints, with working checkpoints along the way, and we never touch live patient data until it's fully tested.</p>
-        </div>
-      </div>
-      <div class="process-item reveal-up" style="--delay:0.24s">
-        <div class="process-num">04</div>
-        <div class="process-body">
-          <h3>Launch &amp; Train</h3>
-          <p>We roll out to your front desk and clinical staff, document everything in plain language, and train your team so the system belongs to you, not just to us.</p>
-        </div>
-      </div>
-      <div class="process-item reveal-up" style="--delay:0.32s">
-        <div class="process-num">05</div>
-        <div class="process-body">
-          <h3>Optimize &amp; Scale</h3>
-          <p>We monitor performance, tune the system against real patient volume, and layer in the next automation as your practice grows.</p>
-        </div>
+
+      <div class="proc-cta">
+        <p class="proc-cta-text">Not sure which fits? Start with a free audit and we'll shape it around your goal.</p>
+        <a href="#contact" class="btn btn-primary">
+          Book a Free Audit
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
     </div>
   </div>
