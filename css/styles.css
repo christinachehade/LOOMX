@@ -805,40 +805,74 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 
 /* Ordered list for semantics (these are sequential steps), but the
    visible numbering is the "01" label, so suppress native markers. */
+/* Steps as a horizontal beam: a track with a light pulse running its
+   length, numbered nodes sitting on the line. Solid accent dots. */
+.proc-beam { position: relative; }
+.proc-track {
+  position: relative;
+  height: 2px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.proc-pulse {
+  position: absolute;
+  inset: 0;
+  width: 24%;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: proc-beam 5.5s linear infinite;
+}
+@keyframes proc-beam {
+  from { transform: translateX(-110%); }
+  to { transform: translateX(460%); }
+}
+@keyframes proc-beam-v {
+  from { transform: translateY(-110%); }
+  to { transform: translateY(460%); }
+}
+
 .proc-steps {
   display: flex;
-  flex-direction: column;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 .proc-step {
-  padding: 26px 0;
-  border-top: 1px solid var(--border);
+  flex: 1;
+  padding: 0 26px 0 0;
+  border: none;
 }
-.proc-step:last-child { border-bottom: 1px solid var(--border); }
-.proc-head {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin-bottom: 7px;
-}
-.proc-num {
-  color: var(--accent);
-  font-size: 14px;
+.proc-step:last-child { padding-right: 0; }
+.proc-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 12.5px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.04em;
+  margin: -19px 0 16px;
+  position: relative;
+  z-index: 1;
 }
-.proc-sep { color: var(--text-faint); }
 .proc-title {
-  font-size: 20px;
+  font-size: 17.5px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--text);
+  margin-bottom: 6px;
+  text-wrap: balance;
 }
 .proc-desc {
   color: var(--text-dim);
-  font-size: 16px;
-  max-width: 62ch;
+  font-size: 15px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proc-pulse { animation: none; opacity: 0.5; }
 }
 
 .proc-cta {
@@ -1218,9 +1252,29 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 
   .proc-tabs { gap: 8px; margin-bottom: 30px; }
   .proc-tab { padding: 10px 16px; font-size: 13.5px; }
-  .proc-step { padding: 22px 0; }
-  .proc-title { font-size: 18px; }
-  .proc-desc { font-size: 15.5px; }
+
+  /* Beam turns vertical: the track becomes a left spine and the pulse
+     runs downward, so the same idea survives the stack. */
+  .proc-beam { padding-left: 52px; }
+  .proc-track {
+    position: absolute;
+    left: 17px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    height: auto;
+  }
+  .proc-pulse {
+    width: 100%;
+    height: 24%;
+    background: linear-gradient(180deg, transparent, var(--accent), transparent);
+    animation-name: proc-beam-v;
+  }
+  .proc-steps { flex-direction: column; gap: 26px; }
+  .proc-step { position: relative; padding: 0; }
+  .proc-dot { position: absolute; left: -52px; top: 0; margin: 0; }
+  .proc-title { font-size: 17px; }
+  .proc-desc { font-size: 15px; }
   .proc-cta { margin-top: 36px; }
   .proc-cta .btn { width: 100%; max-width: 320px; }
 }
