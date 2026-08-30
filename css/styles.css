@@ -945,112 +945,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 
 /* =========================================================
-   Case study
-========================================================= */
-
-.case-study-card {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 48px;
-}
-.case-tag {
-  display: inline-block;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-.case-study-card h3 {
-  font-family: var(--font-display);
-  font-size: clamp(22px, 3vw, 28px);
-  font-weight: 700;
-  letter-spacing: var(--display-track);
-  line-height: 1.32;
-  margin-bottom: 18px;
-}
-.case-study-card > p {
-  color: var(--text-dim);
-  font-size: 16.5px;
-  margin-bottom: 36px;
-}
-.case-metrics {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding: 28px 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 32px;
-}
-.case-metric { display: flex; flex-direction: column; gap: 6px; }
-.metric-value {
-  font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-}
-.metric-label { font-size: 13.5px; color: var(--text-dim); }
-
-/* =========================================================
-   Pricing
-========================================================= */
-
-.pricing-grid { align-items: stretch; }
-.pricing-card {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-.pricing-card h3 { font-size: 21px; font-weight: 700; margin-bottom: 6px; }
-.pricing-desc { color: var(--text-dim); font-size: 14.5px; margin-bottom: 24px; }
-.price { display: flex; align-items: baseline; gap: 8px; margin-bottom: 28px; }
-.price-amount { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
-.price-period { color: var(--text-faint); font-size: 14px; }
-.pricing-features {
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
-  margin-bottom: 32px;
-  flex-grow: 1;
-}
-.pricing-features li {
-  font-size: 15px;
-  color: var(--text-dim);
-  padding-left: 22px;
-  position: relative;
-}
-.pricing-features li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-weight: 700;
-}
-
-.pricing-card.featured {
-  border-color: rgba(67, 96, 224, 0.4);
-  background: linear-gradient(180deg, rgba(67, 96, 224, 0.06), rgba(67, 96, 224, 0.03));
-  transform: scale(1.02);
-}
-.featured-badge {
-  position: absolute;
-  top: -13px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 6px 16px;
-  border-radius: 999px;
-  letter-spacing: 0.02em;
-}
-
-/* =========================================================
    FAQ
 ========================================================= */
 
@@ -1243,12 +1137,9 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   .grid-3 { grid-template-columns: 1fr; }
   .why-points { grid-template-columns: 1fr; gap: 36px; }
   .form-row { grid-template-columns: 1fr; }
-  .case-metrics { grid-template-columns: 1fr; gap: 24px; }
   .footer-links { grid-template-columns: 1fr; gap: 24px; }
   .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
-  .pricing-card.featured { transform: none; }
   .hero { padding-top: 120px; }
-  .case-study-card { padding: 32px 24px; }
   .section { padding: 88px 0; }
 
   .buyer-lead { grid-template-columns: 1fr; gap: 12px; margin-bottom: 36px; }
