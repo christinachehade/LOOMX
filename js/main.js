@@ -9,7 +9,9 @@
   function initHeroWords() {
     const words = document.querySelectorAll(".hero-title .word");
     words.forEach((word, i) => {
-      word.style.animationDelay = `${0.15 + i * 0.055}s`;
+      // Headline is step 1 of the hero stagger (80ms), then each word
+      // follows on a tighter beat so the line still reads as one motion.
+      word.style.animationDelay = `${0.08 + i * 0.05}s`;
     });
   }
 
@@ -337,6 +339,119 @@
   }
 
   /* =========================================================
+     FAQ accordion
+     Only one answer stays open at a time. <details> keeps the markup
+     working without JS; here we take over the toggle so the panel can
+     animate its height both ways instead of snapping.
+  ========================================================= */
+  function initFaq() {
+    const items = Array.from(document.querySelectorAll(".faq-item"));
+    if (!items.length) return;
+
+    const OPEN_MS = 380;
+    const CLOSE_MS = 280;
+
+    function panelOf(item) {
+      return item.querySelector(".faq-answer");
+    }
+
+    function expand(item) {
+      const panel = panelOf(item);
+      if (item._anim) item._anim.cancel();
+      item.open = true;
+      if (prefersReducedMotion) return;
+      item._anim = panel.animate(
+        [
+          { height: "0px", opacity: 0 },
+          { height: panel.scrollHeight + "px", opacity: 1 },
+        ],
+        { duration: OPEN_MS, easing: "cubic-bezier(0.16, 1, 0.3, 1)" }
+      );
+      item._anim.onfinish = () => {
+        item._anim = null;
+      };
+    }
+
+    function collapse(item) {
+      const panel = panelOf(item);
+      if (item._anim) item._anim.cancel();
+      if (prefersReducedMotion) {
+        item.open = false;
+        return;
+      }
+      item._anim = panel.animate(
+        [
+          { height: panel.scrollHeight + "px", opacity: 1 },
+          { height: "0px", opacity: 0 },
+        ],
+        { duration: CLOSE_MS, easing: "cubic-bezier(0.4, 0, 0.2, 1)" }
+      );
+      item._anim.onfinish = () => {
+        item.open = false;
+        item._anim = null;
+      };
+    }
+
+    items.forEach((item) => {
+      const summary = item.querySelector("summary");
+      summary.addEventListener("click", (e) => {
+        // Take over from the native toggle so closing can animate too.
+        e.preventDefault();
+        if (item.open) {
+          collapse(item);
+          return;
+        }
+        items.forEach((other) => {
+          if (other !== item && other.open) collapse(other);
+        });
+        expand(item);
+      });
+    });
+  }
+
+  /* =========================================================
+     Card tilt + cursor-tracked glow
+     Pointer-only: skipped for touch and reduced motion, where a tilt
+     is either impossible to aim or unwelcome.
+  ========================================================= */
+  function initCardTilt() {
+    if (prefersReducedMotion) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    const MAX_TILT = 3; // degrees
+    const cards = document.querySelectorAll(".svc-card, .buyer-lead-item");
+
+    cards.forEach((card) => {
+      let frame = null;
+
+      card.addEventListener("pointermove", (e) => {
+        if (frame) return;
+        frame = requestAnimationFrame(() => {
+          frame = null;
+          const rect = card.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width;
+          const py = (e.clientY - rect.top) / rect.height;
+          card.style.setProperty("--rx", ((0.5 - py) * MAX_TILT * 2).toFixed(2) + "deg");
+          card.style.setProperty("--ry", ((px - 0.5) * MAX_TILT * 2).toFixed(2) + "deg");
+          card.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+          card.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+          card.classList.add("is-tilting");
+        });
+      });
+
+      card.addEventListener("pointerleave", () => {
+        if (frame) {
+          cancelAnimationFrame(frame);
+          frame = null;
+        }
+        card.classList.remove("is-tilting");
+        card.style.setProperty("--rx", "0deg");
+        card.style.setProperty("--ry", "0deg");
+      });
+    });
+  }
+
+  /* =========================================================
      Contact form (client-side only demo submit)
   ========================================================= */
   function initContactForm() {
@@ -358,7 +473,7 @@
       // Simulated send. Wire this up to your backend / form endpoint.
       setTimeout(() => {
         label.textContent = "Request Sent ✓";
-        note.textContent = "Thanks, we'll reach out within one business day.";
+        note.textContent = "Thanks. We will reply within one business day.";
         note.style.color = "var(--success)";
         form.reset();
         setTimeout(() => {
@@ -386,6 +501,8 @@
     initCursorOrb();
     initMeshCanvas();
     initProcessTabs();
+    initFaq();
+    initCardTilt();
     initContactForm();
     initFooterYear();
   });

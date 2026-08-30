@@ -369,7 +369,37 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   max-width: 640px;
   font-size: 19px;
   color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+/* Capability line: one notch quieter than the subhead. */
+.hero-capabilities {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 720px;
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--text-faint);
   margin-bottom: 40px;
+}
+.hero-capabilities .sep { opacity: 0.45; }
+
+/* Staggered hero entrance. Each element carries its own --i, so the
+   cadence is one 80ms step per element rather than hand-tuned delays. */
+.hero-rise {
+  opacity: 0;
+  animation: hero-rise 0.72s var(--ease) forwards;
+  animation-delay: calc(var(--i, 0) * 80ms);
+}
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise { animation-delay: 0s !important; }
 }
 
 .hero-actions {
@@ -716,6 +746,47 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 .svc-card:hover::before { opacity: 1; }
 
+/* Pointer tilt and ambient glow. The transform stays off until JS adds
+   .is-tilting, so touch and reduced-motion users keep the flat hover. */
+.svc-card,
+.buyer-lead-item {
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 50%;
+}
+.svc-card::after,
+.buyer-lead-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(260px circle at var(--mx) var(--my),
+              rgba(var(--accent-ambient), 0.22), transparent 68%);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-soft);
+}
+.svc-card > *,
+.buyer-lead-item > * {
+  position: relative;
+  z-index: 1;
+}
+.svc-card.is-tilting,
+.buyer-lead-item.is-tilting {
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-3px);
+  transition: transform 0.14s linear, border-color 0.3s var(--ease-soft),
+              box-shadow 0.3s var(--ease-soft);
+}
+.svc-card.is-tilting::after,
+.buyer-lead-item.is-tilting::after { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-card.is-tilting,
+  .buyer-lead-item.is-tilting { transform: none; }
+  .svc-card::after,
+  .buyer-lead-item::after { display: none; }
+}
+
 /* The AI layer sits on a faint wash so it reads as a distinct offer. */
 .svc-card-ai {
   background:
@@ -950,13 +1021,35 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 
 .faq-list { display: flex; flex-direction: column; gap: 12px; }
 .faq-item {
+  position: relative;
+  overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   background: var(--glass);
   padding: 6px 26px;
-  transition: border-color 0.25s, background 0.25s;
+  transition: border-color 0.3s var(--ease-soft), background 0.3s var(--ease-soft),
+              box-shadow 0.3s var(--ease-soft);
 }
-.faq-item[open] { border-color: rgba(67, 96, 224, 0.3); background: var(--glass-hover); }
+/* Accent rail down the left edge, drawn on open. */
+.faq-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.4s var(--ease);
+}
+.faq-item:hover { border-color: var(--border-strong); }
+.faq-item[open] {
+  border-color: rgba(67, 96, 224, 0.3);
+  background: var(--glass-hover);
+  box-shadow: 0 14px 30px -24px rgba(20, 22, 43, 0.5);
+}
+.faq-item[open]::before { transform: scaleY(1); }
 .faq-item summary {
   list-style: none;
   display: flex;
@@ -967,8 +1060,12 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   cursor: pointer;
   font-size: 17px;
   font-weight: 600;
+  transition: color 0.25s var(--ease-soft);
 }
 .faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:hover { color: var(--accent); }
+.faq-item[open] summary { color: var(--accent); }
+.faq-q { text-wrap: pretty; }
 .faq-icon {
   flex-shrink: 0;
   width: 28px;
@@ -979,11 +1076,31 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   align-items: center;
   justify-content: center;
   font-size: 17px;
+  line-height: 1;
   color: var(--accent);
-  transition: transform 0.3s var(--ease-soft);
+  transition: transform 0.45s var(--ease), background 0.3s var(--ease-soft),
+              border-color 0.3s var(--ease-soft), color 0.3s var(--ease-soft);
 }
-.faq-item[open] .faq-icon { transform: rotate(45deg); }
-.faq-answer { padding: 0 0 22px; color: var(--text-dim); font-size: 15.5px; max-width: 65ch; }
+.faq-item summary:hover .faq-icon { border-color: var(--accent); }
+.faq-item[open] .faq-icon {
+  transform: rotate(135deg);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+/* Height is animated in JS, so the box itself carries no padding. */
+.faq-answer {
+  overflow: hidden;
+  color: var(--text-dim);
+  font-size: 15.5px;
+  max-width: 65ch;
+}
+.faq-answer p { padding-bottom: 22px; }
+.faq-item[open] .faq-answer p { animation: faq-answer-in 0.45s var(--ease) 0.06s both; }
+@keyframes faq-answer-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 /* =========================================================
    Contact
@@ -1024,6 +1141,11 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 .contact-form { padding: 36px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .form-group { margin-bottom: 18px; display: flex; flex-direction: column; gap: 8px; }
+/* Grid and flex items default to min-width:auto, so a long <option>
+   would widen the whole column past the container on small screens. */
+.contact-grid > *,
+.form-row > *,
+.form-group > * { min-width: 0; }
 .form-group label { font-size: 13.5px; font-weight: 600; color: var(--text-dim); }
 .form-group input,
 .form-group select,
