@@ -9,7 +9,9 @@
   function initHeroWords() {
     const words = document.querySelectorAll(".hero-title .word");
     words.forEach((word, i) => {
-      word.style.animationDelay = `${0.15 + i * 0.055}s`;
+      // Headline is step 1 of the hero stagger (80ms), then each word
+      // follows on a tighter beat so the line still reads as one motion.
+      word.style.animationDelay = `${0.08 + i * 0.05}s`;
     });
   }
 
@@ -169,10 +171,13 @@
     const ctx = canvas.getContext("2d");
     let width, height, dpr;
 
+    // Lighter than the accent and kept faint, so the hero background
+    // reads as atmosphere rather than a second brand colour.
+    const AMBIENT = "140, 165, 255";
     const colors = [
-      "rgba(91, 110, 245, 0.55)",
-      "rgba(139, 108, 255, 0.45)",
-      "rgba(91, 110, 245, 0.3)",
+      `rgba(${AMBIENT}, 0.11)`,
+      `rgba(${AMBIENT}, 0.09)`,
+      `rgba(${AMBIENT}, 0.06)`,
     ];
 
     function resize() {
@@ -205,7 +210,7 @@
         r: 0.6 + Math.random() * 1.6,
         vx: (Math.random() - 0.5) * 0.15,
         vy: (Math.random() - 0.5) * 0.15,
-        alpha: 0.15 + Math.random() * 0.35,
+        alpha: 0.08 + Math.random() * 0.16,
       }));
     }
 
@@ -216,8 +221,8 @@
       t += 0.01;
       ctx.clearRect(0, 0, width, height);
 
-      // gradient mesh blobs
-      ctx.globalCompositeOperation = "lighter";
+      // gradient mesh blobs: soft pastel washes over the white background
+      ctx.globalCompositeOperation = "source-over";
       blobs.forEach((b) => {
         const x = (b.baseX + Math.sin(t * b.speed + b.offset) * b.driftX) * width;
         const y = (b.baseY + Math.cos(t * b.speed + b.offset) * b.driftY) * height;
@@ -240,7 +245,7 @@
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
         ctx.beginPath();
-        ctx.fillStyle = `rgba(245, 247, 250, ${p.alpha})`;
+        ctx.fillStyle = `rgba(${AMBIENT}, ${p.alpha})`;
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fill();
       });
@@ -292,7 +297,166 @@
   }
 
   /* =========================================================
-     Contact form (client-side only demo submit)
+     How It Works: tabs (WAI-ARIA tabs pattern)
+     Roving tabindex so Tab enters/leaves the set once, and arrow
+     keys move between tabs. Panels are toggled with [hidden] so
+     inactive content is hidden from assistive tech, not just
+     visually.
+  ========================================================= */
+  function initProcessTabs() {
+    const tablist = document.querySelector(".proc-tabs");
+    if (!tablist) return;
+    const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+    if (!tabs.length) return;
+
+    function select(index, { focus = true } = {}) {
+      tabs.forEach((tab, i) => {
+        const active = i === index;
+        tab.setAttribute("aria-selected", String(active));
+        tab.tabIndex = active ? 0 : -1;
+        const panel = document.getElementById(tab.getAttribute("aria-controls"));
+        if (panel) panel.hidden = !active;
+      });
+      if (focus) tabs[index].focus();
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => select(i, { focus: false }));
+    });
+
+    tablist.addEventListener("keydown", (e) => {
+      const current = tabs.indexOf(document.activeElement);
+      if (current === -1) return;
+      let next = null;
+      if (e.key === "ArrowRight") next = (current + 1) % tabs.length;
+      else if (e.key === "ArrowLeft") next = (current - 1 + tabs.length) % tabs.length;
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = tabs.length - 1;
+      if (next === null) return;
+      e.preventDefault();
+      select(next);
+    });
+  }
+
+  /* =========================================================
+     FAQ accordion
+     Only one answer stays open at a time. <details> keeps the markup
+     working without JS; here we take over the toggle so the panel can
+     animate its height both ways instead of snapping.
+  ========================================================= */
+  function initFaq() {
+    const items = Array.from(document.querySelectorAll(".faq-item"));
+    if (!items.length) return;
+
+    const OPEN_MS = 380;
+    const CLOSE_MS = 280;
+
+    function panelOf(item) {
+      return item.querySelector(".faq-answer");
+    }
+
+    function expand(item) {
+      const panel = panelOf(item);
+      if (item._anim) item._anim.cancel();
+      item.open = true;
+      if (prefersReducedMotion) return;
+      item._anim = panel.animate(
+        [
+          { height: "0px", opacity: 0 },
+          { height: panel.scrollHeight + "px", opacity: 1 },
+        ],
+        { duration: OPEN_MS, easing: "cubic-bezier(0.16, 1, 0.3, 1)" }
+      );
+      item._anim.onfinish = () => {
+        item._anim = null;
+      };
+    }
+
+    function collapse(item) {
+      const panel = panelOf(item);
+      if (item._anim) item._anim.cancel();
+      if (prefersReducedMotion) {
+        item.open = false;
+        return;
+      }
+      item._anim = panel.animate(
+        [
+          { height: panel.scrollHeight + "px", opacity: 1 },
+          { height: "0px", opacity: 0 },
+        ],
+        { duration: CLOSE_MS, easing: "cubic-bezier(0.4, 0, 0.2, 1)" }
+      );
+      item._anim.onfinish = () => {
+        item.open = false;
+        item._anim = null;
+      };
+    }
+
+    items.forEach((item) => {
+      const summary = item.querySelector("summary");
+      summary.addEventListener("click", (e) => {
+        // Take over from the native toggle so closing can animate too.
+        e.preventDefault();
+        if (item.open) {
+          collapse(item);
+          return;
+        }
+        items.forEach((other) => {
+          if (other !== item && other.open) collapse(other);
+        });
+        expand(item);
+      });
+    });
+  }
+
+  /* =========================================================
+     Card tilt + cursor-tracked glow
+     Pointer-only: skipped for touch and reduced motion, where a tilt
+     is either impossible to aim or unwelcome.
+  ========================================================= */
+  function initCardTilt() {
+    if (prefersReducedMotion) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    const MAX_TILT = 3; // degrees
+    const cards = document.querySelectorAll(".svc-card, .buyer-lead-item");
+
+    cards.forEach((card) => {
+      let frame = null;
+
+      card.addEventListener("pointermove", (e) => {
+        if (frame) return;
+        frame = requestAnimationFrame(() => {
+          frame = null;
+          const rect = card.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width;
+          const py = (e.clientY - rect.top) / rect.height;
+          card.style.setProperty("--rx", ((0.5 - py) * MAX_TILT * 2).toFixed(2) + "deg");
+          card.style.setProperty("--ry", ((px - 0.5) * MAX_TILT * 2).toFixed(2) + "deg");
+          card.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+          card.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+          card.classList.add("is-tilting");
+        });
+      });
+
+      card.addEventListener("pointerleave", () => {
+        if (frame) {
+          cancelAnimationFrame(frame);
+          frame = null;
+        }
+        card.classList.remove("is-tilting");
+        card.style.setProperty("--rx", "0deg");
+        card.style.setProperty("--ry", "0deg");
+      });
+    });
+  }
+
+  /* =========================================================
+     Contact form
+     Submits to the endpoint on the form's own action (Web3Forms) so
+     the markup stays the single source of truth. The fetch is only
+     there to keep the person on the page: without JS the browser
+     posts the same form to the same place.
   ========================================================= */
   function initContactForm() {
     const form = document.getElementById("contactForm");
@@ -300,27 +464,53 @@
     const submitBtn = document.getElementById("submitBtn");
     if (!form) return;
 
-    form.addEventListener("submit", (e) => {
+    const DEFAULT_NOTE = note.textContent;
+
+    function setNote(text, color) {
+      note.textContent = text;
+      note.style.color = color || "";
+    }
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
+
       const label = submitBtn.querySelector(".btn-label");
+      const labelText = label.textContent;
       submitBtn.disabled = true;
       label.textContent = "Sending...";
+      setNote(DEFAULT_NOTE);
 
-      // Simulated send — wire this up to your backend / form endpoint.
-      setTimeout(() => {
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || "Submission failed");
+        }
+
         label.textContent = "Request Sent ✓";
-        note.textContent = "Thanks — we'll reach out within one business day.";
-        note.style.color = "var(--success)";
+        setNote("Thanks. We will reply within one business day.", "var(--success)");
         form.reset();
         setTimeout(() => {
           submitBtn.disabled = false;
-          label.textContent = "Book a Free Audit";
-        }, 3000);
-      }, 900);
+          label.textContent = labelText;
+          setNote(DEFAULT_NOTE);
+        }, 4000);
+      } catch (err) {
+        // Never strand the request: fall back to the email address.
+        submitBtn.disabled = false;
+        label.textContent = labelText;
+        setNote(
+          "That did not go through. Please email loomxmed@gmail.com and we will pick it up from there.",
+          "var(--accent)"
+        );
+      }
     });
   }
 
@@ -340,6 +530,9 @@
     initCounters();
     initCursorOrb();
     initMeshCanvas();
+    initProcessTabs();
+    initFaq();
+    initCardTilt();
     initContactForm();
     initFooterYear();
   });
