@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Loomx | Healthcare Product Design, UX Research, and AI Systems</title>
 <meta name="description" content="Loomx designs and builds healthcare software: clinical platforms, patient portals, websites, apps, and dashboards, backed by UX research. We also set up, automate, and train your team on AI. From health systems and research teams to single clinics.">
+<link rel="canonical" href="https://loomxmed.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://loomxmed.com/">
+<meta property="og:site_name" content="Loomx">
+<meta property="og:title" content="Loomx | Healthcare Product Design, UX Research, and AI Systems">
+<meta property="og:description" content="Healthcare software designed and built end to end: clinical platforms, patient portals, websites, apps, and dashboards, backed by UX research, plus AI setup, automation, and staff training.">
+<meta property="og:image" content="https://loomxmed.com/assets/loomx-logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Loomx | Healthcare Product Design, UX Research, and AI Systems">
+<meta name="twitter:description" content="Healthcare software designed and built end to end: clinical platforms, patient portals, websites, apps, and dashboards, backed by UX research, plus AI setup, automation, and staff training.">
+<meta name="twitter:image" content="https://loomxmed.com/assets/loomx-logo.png">
 <link rel="icon" type="image/png" href="assets/loomx-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,6 +55,63 @@
 <section class="hero" id="top">
   <canvas id="meshCanvas" class="mesh-canvas"></canvas>
   <div class="hero-glow"></div>
+
+  <!-- Abstract interface fragments. Decorative only: they sit outside the
+       central text column so nothing competes with the headline. -->
+  <div class="hero-fragments" aria-hidden="true">
+    <div class="frag frag-1">
+      <div class="frag-head"><span class="frag-dot"></span><span class="frag-line" style="width:52%"></span></div>
+      <span class="frag-line" style="width:88%"></span>
+      <span class="frag-line" style="width:72%"></span>
+      <span class="frag-line" style="width:80%"></span>
+      <span class="frag-line frag-line-accent" style="width:44%"></span>
+    </div>
+
+    <div class="frag frag-2">
+      <span class="frag-label" style="width:38%"></span>
+      <span class="frag-field"></span>
+      <span class="frag-label" style="width:50%"></span>
+      <span class="frag-field"></span>
+      <span class="frag-btn"></span>
+    </div>
+
+    <div class="frag frag-3">
+      <span class="frag-line" style="width:46%"></span>
+      <div class="frag-chart">
+        <span style="height:38%"></span>
+        <span style="height:62%"></span>
+        <span style="height:44%"></span>
+        <span style="height:88%"></span>
+        <span style="height:70%"></span>
+      </div>
+    </div>
+
+    <div class="frag frag-4">
+      <div class="frag-head"><span class="frag-dot"></span><span class="frag-line" style="width:44%"></span></div>
+      <span class="frag-line" style="width:92%"></span>
+      <span class="frag-line" style="width:64%"></span>
+      <div class="frag-row">
+        <span class="frag-btn frag-btn-sm"></span>
+        <span class="frag-line" style="width:34%"></span>
+      </div>
+    </div>
+
+    <div class="frag frag-5">
+      <span class="frag-line" style="width:60%"></span>
+      <span class="frag-line" style="width:84%"></span>
+      <span class="frag-field frag-field-sm"></span>
+    </div>
+
+    <div class="frag frag-6">
+      <div class="frag-chart frag-chart-sm">
+        <span style="height:52%"></span>
+        <span style="height:78%"></span>
+        <span style="height:36%"></span>
+        <span style="height:66%"></span>
+      </div>
+      <span class="frag-line frag-line-accent" style="width:56%"></span>
+    </div>
+  </div>
 
   <div class="hero-content container">
     <div class="hero-logo hero-rise" style="--i:0">
@@ -539,7 +607,7 @@
 
         <div class="contact-detail">
           <span class="contact-label">Email</span>
-          <a href="mailto:hello@loomx.ai">hello@loomx.ai</a>
+          <a href="mailto:loomxmed@gmail.com">loomxmed@gmail.com</a>
         </div>
         <div class="contact-detail">
           <span class="contact-label">Response time</span>
@@ -547,7 +615,17 @@
         </div>
       </div>
 
-      <form class="contact-form glass-card reveal-up" id="contactForm" style="--delay:0.1s">
+      <!-- Posts to Web3Forms. The action and hidden fields are on the form
+           itself, so a plain browser submit still works if the fetch below
+           never runs; main.js intercepts it for the inline confirmation. -->
+      <form class="contact-form glass-card reveal-up" id="contactForm" style="--delay:0.1s"
+            action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="92efe120-1d66-42f4-80de-feb4c1a6ebe2">
+        <input type="hidden" name="subject" value="New audit request from the Loomx site">
+        <input type="hidden" name="from_name" value="Loomx website">
+        <!-- Honeypot: hidden from people, usually filled in by bots. -->
+        <input type="checkbox" name="botcheck" class="form-botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+
         <div class="form-row">
           <div class="form-group">
             <label for="name">Name</label>
@@ -584,7 +662,7 @@
           <span class="btn-label">Book a Free Audit</span>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <p class="form-note" id="formNote">We will reply within one business day.</p>
+        <p class="form-note" id="formNote" role="status" aria-live="polite">We will reply within one business day.</p>
       </form>
     </div>
   </div>
@@ -616,7 +694,7 @@
         </div>
         <div class="footer-col">
           <h4>Connect</h4>
-          <a href="mailto:hello@loomx.ai">hello@loomx.ai</a>
+          <a href="mailto:loomxmed@gmail.com">loomxmed@gmail.com</a>
           <a href="#" aria-label="LinkedIn">LinkedIn</a>
           <a href="#" aria-label="Twitter / X">Twitter / X</a>
         </div>

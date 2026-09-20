@@ -318,6 +318,117 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   pointer-events: none;
 }
 
+/* =========================================================
+   Hero interface fragments
+   Abstract panels that suggest the kind of product we build.
+   Purely decorative: they live below the text layer (z-index 1
+   against the content's 2) and stay clear of the centre column.
+========================================================= */
+
+.hero-fragments {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.frag {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  box-shadow: 0 20px 44px -26px rgba(20, 22, 43, 0.55),
+              0 2px 6px rgba(20, 22, 43, 0.04);
+  transform: rotate(var(--rot, 0deg));
+  animation: frag-float var(--dur, 18s) var(--ease-soft) var(--dly, 0s) infinite;
+}
+@keyframes frag-float {
+  0%, 100% { transform: rotate(var(--rot, 0deg)) translateY(0); }
+  50% { transform: rotate(var(--rot, 0deg)) translateY(-6px); }
+}
+
+/* Panel contents: bars stand in for copy, fields, buttons and charts. */
+.frag-line {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border-strong);
+}
+.frag-line-accent { background: var(--accent); opacity: 0.5; }
+.frag-label {
+  height: 5px;
+  border-radius: 3px;
+  background: var(--border-strong);
+  opacity: 0.7;
+}
+.frag-head { display: flex; align-items: center; gap: 8px; }
+.frag-row { display: flex; align-items: center; gap: 9px; }
+.frag-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.45;
+  flex-shrink: 0;
+}
+.frag-field {
+  height: 26px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+.frag-field-sm { height: 20px; }
+.frag-btn {
+  height: 24px;
+  border-radius: 999px;
+  background: var(--accent);
+  opacity: 0.6;
+}
+.frag-btn-sm { width: 46px; height: 18px; flex-shrink: 0; }
+.frag-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 54px;
+}
+.frag-chart-sm { height: 40px; }
+.frag-chart span {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  background: var(--accent);
+  opacity: 0.38;
+}
+
+/* Placement. Sizes and angles vary so the set reads as composed
+   rather than tiled; the lower-centre pair sits nearest the type,
+   so it is the faintest. */
+/* The lower four are anchored in pixels from the hero's bottom edge so
+   they stay in the two bands where the centred copy is narrow or absent:
+   the button row, and the padding below the trust strip. */
+.frag-1 { top: 16%; left: 2.5%; width: 212px; --rot: -6deg; --dur: 19s; opacity: 0.5; }
+.frag-2 { bottom: 196px; left: 5%; width: 168px; --rot: 5deg; --dur: 23s; --dly: -6s; opacity: 0.45; }
+.frag-3 { top: 21%; right: 3.5%; width: 176px; --rot: 7deg; --dur: 21s; --dly: -3s; opacity: 0.48; }
+.frag-4 { bottom: 202px; right: 3%; width: 220px; --rot: -5deg; --dur: 25s; --dly: -9s; opacity: 0.52; }
+.frag-5 { bottom: 244px; left: 19%; width: 148px; --rot: 4deg; --dur: 22s; --dly: -12s; opacity: 0.34; }
+.frag-6 { bottom: 236px; right: 20%; width: 136px; --rot: -7deg; --dur: 20s; --dly: -15s; opacity: 0.32; }
+
+/* The centre column widens against the viewport as it narrows, so the
+   panels shrink, hug the edges, and the lower-centre pair drops out. */
+@media (max-width: 1180px) {
+  .frag-5, .frag-6 { display: none; }
+  .frag-1 { width: 150px; left: 1.5%; }
+  .frag-2 { width: 132px; left: 1.5%; }
+  .frag-3 { width: 140px; right: 1.5%; }
+  .frag-4 { width: 172px; right: 1.5%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frag { animation: none; transform: rotate(var(--rot, 0deg)); }
+}
+
 .hero-content {
   position: relative;
   z-index: 2;
@@ -1167,7 +1278,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 .form-group select { color-scheme: light; }
 .form-group input::placeholder,
 .form-group textarea::placeholder { color: var(--text-faint); }
-.form-note { text-align: center; font-size: 13px; color: var(--text-faint); margin-top: 16px; }
+.form-note { text-align: center; font-size: 13px; color: var(--text-faint); margin-top: 16px; transition: color 0.25s var(--ease-soft); }
+.form-botcheck { position: absolute; left: -9999px; opacity: 0; pointer-events: none; }
 
 /* =========================================================
    Footer
@@ -1230,6 +1342,12 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 ========================================================= */
 
 @media (max-width: 980px) {
+  /* Tablet and below: two panels at most. The side gutters are too
+     narrow here to hold a whole card, so the pair is bled off the
+     edges in the empty band above the headline. */
+  .frag-2, .frag-3, .frag-5, .frag-6 { display: none; }
+  .frag-1 { top: 6%; left: -110px; bottom: auto; width: 168px; opacity: 0.32; }
+  .frag-4 { top: 11%; right: -112px; bottom: auto; width: 176px; opacity: 0.32; }
   .why-grid { grid-template-columns: 1fr; gap: 40px; }
   .contact-grid { grid-template-columns: 1fr; }
   .grid-3 { grid-template-columns: 1fr 1fr; }
@@ -1240,6 +1358,9 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 
 @media (max-width: 760px) {
+  /* Phones fade the pair down further still. */
+  .frag-1 { width: 152px; left: -102px; opacity: 0.28; }
+  .frag-4 { width: 158px; right: -100px; opacity: 0.28; }
   .nav-links, .nav-cta { display: none; }
   .nav-toggle { display: flex; }
   .nav-links.open {
@@ -1302,4 +1423,17 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   .proc-desc { font-size: 15px; }
   .proc-cta { margin-top: 36px; }
   .proc-cta .btn { width: 100%; max-width: 320px; }
+}
+
+/* Narrow phones: the headline fills the width, so a single panel is
+   parked in the empty band below the trust strip. */
+@media (max-width: 440px) {
+  .frag-4 { display: none; }
+  .frag-1 {
+    top: auto;
+    bottom: 20px;
+    left: -114px;
+    width: 146px;
+    opacity: 0.26;
+  }
 }

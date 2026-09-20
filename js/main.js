@@ -452,7 +452,11 @@
   }
 
   /* =========================================================
-     Contact form (client-side only demo submit)
+     Contact form
+     Submits to the endpoint on the form's own action (Web3Forms) so
+     the markup stays the single source of truth. The fetch is only
+     there to keep the person on the page: without JS the browser
+     posts the same form to the same place.
   ========================================================= */
   function initContactForm() {
     const form = document.getElementById("contactForm");
@@ -460,27 +464,53 @@
     const submitBtn = document.getElementById("submitBtn");
     if (!form) return;
 
-    form.addEventListener("submit", (e) => {
+    const DEFAULT_NOTE = note.textContent;
+
+    function setNote(text, color) {
+      note.textContent = text;
+      note.style.color = color || "";
+    }
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
+
       const label = submitBtn.querySelector(".btn-label");
+      const labelText = label.textContent;
       submitBtn.disabled = true;
       label.textContent = "Sending...";
+      setNote(DEFAULT_NOTE);
 
-      // Simulated send. Wire this up to your backend / form endpoint.
-      setTimeout(() => {
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || "Submission failed");
+        }
+
         label.textContent = "Request Sent ✓";
-        note.textContent = "Thanks. We will reply within one business day.";
-        note.style.color = "var(--success)";
+        setNote("Thanks. We will reply within one business day.", "var(--success)");
         form.reset();
         setTimeout(() => {
           submitBtn.disabled = false;
-          label.textContent = "Book a Free Audit";
-        }, 3000);
-      }, 900);
+          label.textContent = labelText;
+          setNote(DEFAULT_NOTE);
+        }, 4000);
+      } catch (err) {
+        // Never strand the request: fall back to the email address.
+        submitBtn.disabled = false;
+        label.textContent = labelText;
+        setNote(
+          "That did not go through. Please email loomxmed@gmail.com and we will pick it up from there.",
+          "var(--accent)"
+        );
+      }
     });
   }
 
