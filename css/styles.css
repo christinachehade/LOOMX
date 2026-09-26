@@ -335,7 +335,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   /* White centre opening out to a soft blue at the edges. */
   background: radial-gradient(ellipse 75% 85% at 50% 45%,
     var(--bg) 45%,
-    rgba(var(--accent-ambient), 0.10) 100%);
+    rgba(var(--accent-ambient), 0.04) 100%);
 }
 /* Fade the bottom back to white so the hero meets Services seamlessly. */
 .hero::after {

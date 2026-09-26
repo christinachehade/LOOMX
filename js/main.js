@@ -226,9 +226,9 @@
     // reads as atmosphere rather than a second brand colour.
     const AMBIENT = "140, 165, 255";
     const colors = [
-      `rgba(${AMBIENT}, 0.12)`,
-      `rgba(${AMBIENT}, 0.09)`,
-      `rgba(${AMBIENT}, 0.07)`,
+      `rgba(${AMBIENT}, 0.05)`,
+      `rgba(${AMBIENT}, 0.04)`,
+      `rgba(${AMBIENT}, 0.03)`,
     ];
 
     function resize() {
