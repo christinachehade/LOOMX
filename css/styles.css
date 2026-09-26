@@ -1124,9 +1124,9 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
    Responsive
 ========================================================= */
 
-/* Six links plus the CTA need roughly 1030px, so below that the links
+/* Six links plus the CTA need roughly 960px, so below that the links
    fold into the menu toggle while the CTA stays visible. */
-@media (max-width: 1060px) {
+@media (max-width: 980px) {
   .nav-links { display: none; }
   .nav-cta { margin-left: auto; margin-right: 18px; }
   .nav-toggle { display: flex; }
