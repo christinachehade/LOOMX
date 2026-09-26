@@ -154,7 +154,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 
 /* Groups whose children arrive one after another. Uses the individual
-   `translate` property so it never fights the cards' tilt `transform`. */
+   `translate` property so it never fights the cards' hover `transform`. */
 .reveal-stagger > * {
   opacity: 0;
   translate: 0 32px;
@@ -492,33 +492,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   align-items: flex-end;
   min-height: 132px;
   padding: 24px 22px 22px;
-  border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  background:
-    linear-gradient(180deg, rgba(var(--accent-ambient), 0.05), transparent 62%),
-    var(--bg);
-  transition: border-color 0.3s var(--ease-soft),
-              transform 0.3s var(--ease-soft),
-              box-shadow 0.3s var(--ease-soft);
 }
-/* Accent rule along the top edge, clipped to the card's rounded corners. */
-.buyer-lead-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--accent);
-  opacity: 0.3;
-  transition: opacity 0.3s var(--ease-soft);
-}
-.buyer-lead-item:hover {
-  border-color: rgba(67, 96, 224, 0.34);
-  transform: translateY(-3px);
-  box-shadow: 0 18px 38px -26px rgba(20, 22, 43, 0.4);
-}
-.buyer-lead-item:hover::before { opacity: 1; }
 
 .buyer-lead-name {
   font-family: var(--font-display);
@@ -649,70 +624,37 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   position: relative;
   overflow: hidden;
   padding: 30px 28px 32px;
-  /* The border itself carries the accent: it wraps the top corners and
-     fades down each side into the plain border, rather than sitting on
-     top as a separate stripe. --edge drives the strength on hover. */
-  --edge: 0.38;
-  border: 1.5px solid transparent;
   border-radius: var(--radius-lg);
-  background:
-    linear-gradient(var(--bg), var(--bg)) padding-box,
-    linear-gradient(180deg, rgba(67, 96, 224, var(--edge)), var(--border) 58%) border-box;
-  transition: --edge 0.3s var(--ease-soft),
-              transform 0.3s var(--ease-soft),
-              box-shadow 0.3s var(--ease-soft);
-}
-.svc-card:hover {
-  --edge: 0.8;
-  transform: translateY(-3px);
-  box-shadow: 0 20px 42px -28px rgba(20, 22, 43, 0.42);
 }
 
+/* Shared card edge. The border itself carries the navy: it wraps the
+   top corners and fades down each side into the plain border. On hover
+   the edge firms up and the card lifts onto a soft neutral shadow. */
 @property --edge {
   syntax: "<number>";
   inherits: false;
-  initial-value: 0.38;
+  initial-value: 0.22;
 }
-
-/* Pointer tilt and ambient glow. The transform stays off until JS adds
-   .is-tilting, so touch and reduced-motion users keep the flat hover. */
 .svc-card,
 .buyer-lead-item {
-  --rx: 0deg;
-  --ry: 0deg;
-  --mx: 50%;
-  --my: 50%;
+  --edge: 0.22;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(var(--bg), var(--bg)) padding-box,
+    linear-gradient(180deg, rgba(19, 18, 44, var(--edge)), var(--border) 58%) border-box;
+  transition: --edge 0.3s var(--ease-soft),
+              transform 0.35s var(--ease),
+              box-shadow 0.35s var(--ease);
 }
-.svc-card::after,
-.buyer-lead-item::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(260px circle at var(--mx) var(--my),
-              rgba(var(--accent-ambient), 0.22), transparent 68%);
-  opacity: 0;
-  transition: opacity 0.35s var(--ease-soft);
+.svc-card:hover,
+.buyer-lead-item:hover {
+  --edge: 0.7;
+  transform: translateY(-4px);
+  box-shadow: 0 22px 40px -30px rgba(20, 22, 43, 0.35);
 }
-.svc-card > *,
-.buyer-lead-item > * {
-  position: relative;
-  z-index: 1;
-}
-.svc-card.is-tilting,
-.buyer-lead-item.is-tilting {
-  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-3px);
-  transition: transform 0.14s linear, border-color 0.3s var(--ease-soft), --edge 0.3s var(--ease-soft),
-              box-shadow 0.3s var(--ease-soft);
-}
-.svc-card.is-tilting::after,
-.buyer-lead-item.is-tilting::after { opacity: 1; }
-
 @media (prefers-reduced-motion: reduce) {
-  .svc-card.is-tilting,
-  .buyer-lead-item.is-tilting { transform: none; }
-  .svc-card::after,
-  .buyer-lead-item::after { display: none; }
+  .svc-card:hover,
+  .buyer-lead-item:hover { transform: none; }
 }
 
 .svc-name {

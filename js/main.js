@@ -371,48 +371,6 @@
   }
 
   /* =========================================================
-     Card tilt + cursor-tracked glow
-     Pointer-only: skipped for touch and reduced motion, where a tilt
-     is either impossible to aim or unwelcome.
-  ========================================================= */
-  function initCardTilt() {
-    if (prefersReducedMotion) return;
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-
-    const MAX_TILT = 3; // degrees
-    const cards = document.querySelectorAll(".svc-card, .buyer-lead-item");
-
-    cards.forEach((card) => {
-      let frame = null;
-
-      card.addEventListener("pointermove", (e) => {
-        if (frame) return;
-        frame = requestAnimationFrame(() => {
-          frame = null;
-          const rect = card.getBoundingClientRect();
-          const px = (e.clientX - rect.left) / rect.width;
-          const py = (e.clientY - rect.top) / rect.height;
-          card.style.setProperty("--rx", ((0.5 - py) * MAX_TILT * 2).toFixed(2) + "deg");
-          card.style.setProperty("--ry", ((px - 0.5) * MAX_TILT * 2).toFixed(2) + "deg");
-          card.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
-          card.style.setProperty("--my", (py * 100).toFixed(1) + "%");
-          card.classList.add("is-tilting");
-        });
-      });
-
-      card.addEventListener("pointerleave", () => {
-        if (frame) {
-          cancelAnimationFrame(frame);
-          frame = null;
-        }
-        card.classList.remove("is-tilting");
-        card.style.setProperty("--rx", "0deg");
-        card.style.setProperty("--ry", "0deg");
-      });
-    });
-  }
-
-  /* =========================================================
      Contact form
      Submits to the endpoint on the form's own action (Web3Forms) so
      the markup stays the single source of truth. The fetch is only
@@ -492,7 +450,6 @@
     initCursorOrb();
     initMeshCanvas();
     initFaq();
-    initCardTilt();
     initContactForm();
     initFooterYear();
   });
