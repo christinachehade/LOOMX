@@ -171,6 +171,11 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   .reveal-stagger.in-view > * { animation: none; }
 }
 
+/* The studio name is always set in bold wherever it appears; in running
+   copy it also takes the heading colour so it reads as a name. */
+.brand-name { font-weight: 700; }
+p .brand-name { color: var(--text); }
+
 /* =========================================================
    Buttons
 ========================================================= */
@@ -422,7 +427,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   margin-bottom: 40px;
 }
 .hero-sub p + p { margin-top: 14px; }
-.hero-brand { font-weight: 600; color: var(--text); }
 
 /* Staggered hero entrance. Each element carries its own --i, so the
    cadence is one 80ms step per element rather than hand-tuned delays. */
