@@ -519,6 +519,50 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 
 /* =========================================================
+   What We Build - six product types
+========================================================= */
+
+.build-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.build-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 26px 30px;
+  border-radius: var(--radius-lg);
+}
+.build-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  background: rgba(19, 18, 44, 0.06);
+  color: var(--ink);
+}
+.build-icon svg { display: block; }
+.build-name {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin-bottom: 8px;
+  text-wrap: balance;
+}
+.build-desc {
+  color: var(--text-dim);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* =========================================================
    Section shell
 ========================================================= */
 
@@ -637,7 +681,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   initial-value: 0.09;
 }
 .svc-card,
-.buyer-lead-item {
+.buyer-lead-item,
+.build-card {
   --edge: 0.22;
   --edge-low: 0.09;
   border: 1.5px solid transparent;
@@ -650,7 +695,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
               box-shadow 0.35s var(--ease);
 }
 .svc-card:hover,
-.buyer-lead-item:hover {
+.buyer-lead-item:hover,
+.build-card:hover {
   --edge: 0.7;
   --edge-low: 0.7;
   transform: translateY(-4px);
@@ -658,7 +704,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 @media (prefers-reduced-motion: reduce) {
   .svc-card:hover,
-  .buyer-lead-item:hover { transform: none; }
+  .buyer-lead-item:hover,
+  .build-card:hover { transform: none; }
 }
 
 .svc-name {
@@ -847,6 +894,9 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   box-shadow: 0 14px 30px -24px rgba(20, 22, 43, 0.5);
 }
 .faq-item[open]::before { transform: scaleY(1); }
+/* On the grey band the translucent fill turns muddy; use solid white. */
+.section-alt .faq-item,
+.section-alt .faq-item[open] { background: var(--bg); }
 .faq-item summary {
   list-style: none;
   display: flex;
@@ -1036,6 +1086,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 
 @media (max-width: 980px) {
+  .build-grid { grid-template-columns: repeat(2, 1fr); }
   .why-grid { grid-template-columns: 1fr; gap: 40px; }
   .contact-grid { grid-template-columns: 1fr; }
   .grid-3 { grid-template-columns: 1fr 1fr; }
@@ -1087,6 +1138,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   .section { padding: 88px 0; }
 
   .buyer-lead { grid-template-columns: 1fr; gap: 16px; }
+  .build-grid { grid-template-columns: 1fr; gap: 16px; }
+  .build-card { padding: 24px 22px 26px; }
   .buyer-lead-item { padding: 26px 24px 28px; }
   .buyer-lead-name { font-size: 20px; }
 
