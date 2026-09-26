@@ -1017,15 +1017,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 .contact-copy h2 { font-family: var(--font-display); font-size: clamp(28px, 3.6vw, 40px); font-weight: 700; letter-spacing: var(--display-track); line-height: 1.18; margin: 12px 0 18px; }
 .contact-copy > p { color: var(--text-dim); font-size: 17.5px; margin-bottom: 36px; }
-.contact-detail {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 18px 0;
-  border-top: 1px solid var(--border);
-}
-.contact-detail a { color: var(--accent); font-weight: 600; }
-.contact-label { font-size: 13px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.06em; }
 
 .contact-form { padding: 36px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
