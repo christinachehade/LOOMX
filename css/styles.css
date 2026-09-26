@@ -282,7 +282,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   font-weight: 500;
   color: var(--text-dim);
 }
-.nav-links a { transition: color 0.2s; position: relative; }
+.nav-links a { transition: color 0.2s; position: relative; white-space: nowrap; }
 .nav-links a:hover { color: var(--text); }
 
 .nav-toggle {
@@ -649,30 +649,30 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   position: relative;
   overflow: hidden;
   padding: 30px 28px 32px;
-  border: 1px solid var(--border);
+  /* The border itself carries the accent: it wraps the top corners and
+     fades down each side into the plain border, rather than sitting on
+     top as a separate stripe. --edge drives the strength on hover. */
+  --edge: 0.38;
+  border: 1.5px solid transparent;
   border-radius: var(--radius-lg);
-  background: var(--bg);
-  transition: border-color 0.3s var(--ease-soft),
+  background:
+    linear-gradient(var(--bg), var(--bg)) padding-box,
+    linear-gradient(180deg, rgba(67, 96, 224, var(--edge)), var(--border) 58%) border-box;
+  transition: --edge 0.3s var(--ease-soft),
               transform 0.3s var(--ease-soft),
               box-shadow 0.3s var(--ease-soft);
 }
-.svc-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--accent);
-  opacity: 0.28;
-  transition: opacity 0.3s var(--ease-soft);
-}
 .svc-card:hover {
-  border-color: rgba(67, 96, 224, 0.34);
+  --edge: 0.8;
   transform: translateY(-3px);
   box-shadow: 0 20px 42px -28px rgba(20, 22, 43, 0.42);
 }
-.svc-card:hover::before { opacity: 1; }
+
+@property --edge {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.38;
+}
 
 /* Pointer tilt and ambient glow. The transform stays off until JS adds
    .is-tilting, so touch and reduced-motion users keep the flat hover. */
@@ -702,7 +702,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 .svc-card.is-tilting,
 .buyer-lead-item.is-tilting {
   transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-3px);
-  transition: transform 0.14s linear, border-color 0.3s var(--ease-soft),
+  transition: transform 0.14s linear, border-color 0.3s var(--ease-soft), --edge 0.3s var(--ease-soft),
               box-shadow 0.3s var(--ease-soft);
 }
 .svc-card.is-tilting::after,
@@ -748,8 +748,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 
 /* Ordered list for semantics (these are sequential steps), but the
    visible numbering is the "01" label, so suppress native markers. */
-/* Steps as a horizontal beam: a track with a light pulse running its
-   length, numbered nodes sitting on the line. Solid accent dots. */
+/* Steps as a horizontal line with numbered nodes sitting on it. */
 .proc-beam { position: relative; }
 .proc-track {
   position: relative;
@@ -757,21 +756,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   background: var(--border);
   border-radius: 2px;
   overflow: hidden;
-}
-.proc-pulse {
-  position: absolute;
-  inset: 0;
-  width: 24%;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  animation: proc-beam 5.5s linear infinite;
-}
-@keyframes proc-beam {
-  from { transform: translateX(-110%); }
-  to { transform: translateX(460%); }
-}
-@keyframes proc-beam-v {
-  from { transform: translateY(-110%); }
-  to { transform: translateY(460%); }
 }
 
 .proc-steps {
@@ -812,10 +796,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 .proc-desc {
   color: var(--text-dim);
   font-size: 15px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .proc-pulse { animation: none; opacity: 0.5; }
 }
 
 .proc-cta {
@@ -1101,6 +1081,11 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
    Responsive
 ========================================================= */
 
+/* Between tablet and desktop the nav CTA is wide, so the links close up. */
+@media (max-width: 1000px) {
+  .nav-links { gap: 18px; font-size: 13.5px; }
+}
+
 @media (max-width: 980px) {
   .why-grid { grid-template-columns: 1fr; gap: 40px; }
   .contact-grid { grid-template-columns: 1fr; }
@@ -1110,9 +1095,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   .buyer-lead { grid-template-columns: repeat(2, 1fr); }
   .buyer-index { grid-template-columns: repeat(3, 1fr); column-gap: 26px; }
 
-  /* Five steps are too tight side by side here, so the beam turns
-     vertical: the track becomes a left spine and the pulse runs
-     downward, so the same idea survives the stack. */
+  /* Five steps are too tight side by side here, so the line turns
+     vertical and becomes a left spine. */
   .proc-beam { padding-left: 52px; }
   .proc-track {
     position: absolute;
@@ -1121,12 +1105,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
     bottom: 4px;
     width: 2px;
     height: auto;
-  }
-  .proc-pulse {
-    width: 100%;
-    height: 24%;
-    background: linear-gradient(180deg, transparent, var(--accent), transparent);
-    animation-name: proc-beam-v;
   }
   .proc-steps { flex-direction: column; gap: 26px; }
   .proc-step { position: relative; padding: 0; }
