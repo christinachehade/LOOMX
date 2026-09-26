@@ -636,7 +636,7 @@ p .brand-name { color: var(--text); }
     var(--bg) 100%);
 }
 /* The hero already carries its own bottom breathing room. */
-#services { padding-top: 32px; }
+#what-we-do { padding-top: 32px; }
 
 .section-head {
   max-width: 640px;
@@ -704,24 +704,6 @@ p .brand-name { color: var(--text); }
 
 .svc-group + .svc-group { margin-top: 64px; }
 
-.svc-group-head {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 30px;
-}
-.svc-group-head h3 {
-  font-family: var(--font-display);
-  font-size: 25px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-}
-.svc-rule {
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
 
 .svc-card {
   position: relative;
@@ -1236,8 +1218,6 @@ p .brand-name { color: var(--text); }
   .buyer-lead-name { font-size: 20px; }
 
   .svc-group + .svc-group { margin-top: 48px; }
-  .svc-group-head { gap: 14px; margin-bottom: 22px; }
-  .svc-group-head h3 { font-size: 22px; }
   .svc-card { padding: 26px 24px 28px; }
 
   .proc-cta { margin-top: 36px; }
