@@ -153,6 +153,24 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   transform: translateY(0);
 }
 
+/* Groups whose children arrive one after another. Uses the individual
+   `translate` property so it never fights the cards' tilt `transform`. */
+.reveal-stagger > * {
+  opacity: 0;
+  translate: 0 32px;
+}
+.reveal-stagger.in-view > * {
+  animation: stagger-up 0.9s var(--ease) both;
+  animation-delay: calc(var(--delay, 0s) + var(--i, 0) * 90ms);
+}
+@keyframes stagger-up {
+  to { opacity: 1; translate: 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-stagger > * { opacity: 1; translate: none; }
+  .reveal-stagger.in-view > * { animation: none; }
+}
+
 /* =========================================================
    Buttons
 ========================================================= */
@@ -292,7 +310,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   align-items: center;
   justify-content: center;
   /* Bottom padding clears the absolutely-positioned scroll indicator. */
-  padding: 140px 0 140px;
+  padding: 140px 0 96px;
   overflow: hidden;
 }
 
@@ -413,7 +431,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   gap: 16px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 56px;
 }
 
 .scroll-indicator {
@@ -540,6 +557,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   position: relative;
 }
 .section-alt { background: var(--bg-alt); }
+/* The hero already carries its own bottom breathing room. */
+#services { padding-top: 32px; }
 
 .section-head {
   max-width: 640px;

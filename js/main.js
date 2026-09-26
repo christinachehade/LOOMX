@@ -60,7 +60,10 @@
      IntersectionObserver reveal-on-scroll
   ========================================================= */
   function initReveals() {
-    const els = document.querySelectorAll(".reveal-up");
+    const els = document.querySelectorAll(".reveal-up, .reveal-stagger");
+    document.querySelectorAll(".reveal-stagger").forEach((group) => {
+      Array.from(group.children).forEach((child, i) => child.style.setProperty("--i", Math.min(i, 8)));
+    });
     if (!("IntersectionObserver" in window) || prefersReducedMotion) {
       els.forEach((el) => el.classList.add("in-view"));
       return;
@@ -74,7 +77,7 @@
           }
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+      { threshold: 0, rootMargin: "0px 0px -8% 0px" }
     );
     els.forEach((el) => observer.observe(el));
   }
