@@ -342,7 +342,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   font-weight: 700;
   letter-spacing: var(--display-track);
   line-height: 1.08;
-  max-width: 15ch;
+  max-width: 22ch;
   margin-bottom: 28px;
 }
 .hero-title .line {
@@ -370,6 +370,11 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   font-size: 19px;
   color: var(--text-dim);
   margin-bottom: 20px;
+}
+.hero-sub p + p { margin-top: 14px; }
+.hero-sub-strong strong {
+  font-weight: 600;
+  color: var(--text);
 }
 
 /* Capability line: one notch quieter than the subhead. */
