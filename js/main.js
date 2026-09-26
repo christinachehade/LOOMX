@@ -29,12 +29,60 @@
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
-    toggle.addEventListener("click", () => {
-      links.classList.toggle("open");
-    });
+    const setOpen = (open) => {
+      links.classList.toggle("open", open);
+      nav.classList.toggle("menu-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    };
+
+    toggle.addEventListener("click", () => setOpen(!links.classList.contains("open")));
 
     links.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => links.classList.remove("open"));
+      a.addEventListener("click", () => setOpen(false));
+    });
+
+    // Close on Escape, on a tap outside the bar, or when the window grows
+    // past the breakpoint where the full link row returns.
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && links.classList.contains("open")) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    document.addEventListener("click", (e) => {
+      if (links.classList.contains("open") && !nav.contains(e.target)) setOpen(false);
+    });
+    window.matchMedia("(min-width: 981px)").addEventListener("change", (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
+
+  /* =========================================================
+     In-page links: scroll to the section ourselves rather than
+     relying on the hash jump, which some embedded previews block.
+     Offsets by the fixed nav's height so headings aren't hidden.
+  ========================================================= */
+  function initAnchorLinks() {
+    const nav = document.getElementById("nav");
+
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const id = link.getAttribute("href").slice(1);
+        const target = id === "top" ? document.body : document.getElementById(id);
+        if (!target) return;
+        e.preventDefault();
+
+        const offset = nav ? nav.offsetHeight + 12 : 0;
+        const y = id === "top" ? 0 : target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: Math.max(0, y), behavior: prefersReducedMotion ? "auto" : "smooth" });
+
+        try {
+          history.replaceState(null, "", "#" + id);
+        } catch (err) {
+          /* Sandboxed frames can refuse history updates; the scroll still happens. */
+        }
+      });
     });
   }
 
@@ -60,7 +108,10 @@
      IntersectionObserver reveal-on-scroll
   ========================================================= */
   function initReveals() {
-    const els = document.querySelectorAll(".reveal-up");
+    const els = document.querySelectorAll(".reveal-up, .reveal-stagger");
+    document.querySelectorAll(".reveal-stagger").forEach((group) => {
+      Array.from(group.children).forEach((child, i) => child.style.setProperty("--i", Math.min(i, 8)));
+    });
     if (!("IntersectionObserver" in window) || prefersReducedMotion) {
       els.forEach((el) => el.classList.add("in-view"));
       return;
@@ -74,7 +125,7 @@
           }
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+      { threshold: 0, rootMargin: "0px 0px -8% 0px" }
     );
     els.forEach((el) => observer.observe(el));
   }
@@ -175,9 +226,9 @@
     // reads as atmosphere rather than a second brand colour.
     const AMBIENT = "140, 165, 255";
     const colors = [
-      `rgba(${AMBIENT}, 0.11)`,
-      `rgba(${AMBIENT}, 0.09)`,
-      `rgba(${AMBIENT}, 0.06)`,
+      `rgba(${AMBIENT}, 0.05)`,
+      `rgba(${AMBIENT}, 0.04)`,
+      `rgba(${AMBIENT}, 0.03)`,
     ];
 
     function resize() {
@@ -190,14 +241,15 @@
     }
 
     const blobCount = 5;
+    // Blobs live along the left and right edges; the centre stays white.
     const blobs = Array.from({ length: blobCount }, (_, i) => ({
-      baseX: Math.random(),
-      baseY: Math.random() * 0.7,
+      baseX: i % 2 === 0 ? Math.random() * 0.12 : 0.88 + Math.random() * 0.12,
+      baseY: 0.1 + Math.random() * 0.7,
       r: 220 + Math.random() * 220,
       color: colors[i % colors.length],
       speed: 0.06 + Math.random() * 0.05,
       offset: Math.random() * Math.PI * 2,
-      driftX: 0.12 + Math.random() * 0.08,
+      driftX: 0.03 + Math.random() * 0.04,
       driftY: 0.1 + Math.random() * 0.08,
     }));
 
@@ -228,7 +280,9 @@
         const y = (b.baseY + Math.cos(t * b.speed + b.offset) * b.driftY) * height;
         const grad = ctx.createRadialGradient(x, y, 0, x, y, b.r);
         grad.addColorStop(0, b.color);
-        grad.addColorStop(1, "rgba(0,0,0,0)");
+        // Fade to the same hue at zero alpha; fading to transparent black
+        // greys out the wash on its way down.
+        grad.addColorStop(1, `rgba(${AMBIENT}, 0)`);
         ctx.fillStyle = grad;
         ctx.beginPath();
         ctx.arc(x, y, b.r, 0, Math.PI * 2);
@@ -294,48 +348,6 @@
     }
 
     start();
-  }
-
-  /* =========================================================
-     How It Works: tabs (WAI-ARIA tabs pattern)
-     Roving tabindex so Tab enters/leaves the set once, and arrow
-     keys move between tabs. Panels are toggled with [hidden] so
-     inactive content is hidden from assistive tech, not just
-     visually.
-  ========================================================= */
-  function initProcessTabs() {
-    const tablist = document.querySelector(".proc-tabs");
-    if (!tablist) return;
-    const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
-    if (!tabs.length) return;
-
-    function select(index, { focus = true } = {}) {
-      tabs.forEach((tab, i) => {
-        const active = i === index;
-        tab.setAttribute("aria-selected", String(active));
-        tab.tabIndex = active ? 0 : -1;
-        const panel = document.getElementById(tab.getAttribute("aria-controls"));
-        if (panel) panel.hidden = !active;
-      });
-      if (focus) tabs[index].focus();
-    }
-
-    tabs.forEach((tab, i) => {
-      tab.addEventListener("click", () => select(i, { focus: false }));
-    });
-
-    tablist.addEventListener("keydown", (e) => {
-      const current = tabs.indexOf(document.activeElement);
-      if (current === -1) return;
-      let next = null;
-      if (e.key === "ArrowRight") next = (current + 1) % tabs.length;
-      else if (e.key === "ArrowLeft") next = (current - 1 + tabs.length) % tabs.length;
-      else if (e.key === "Home") next = 0;
-      else if (e.key === "End") next = tabs.length - 1;
-      if (next === null) return;
-      e.preventDefault();
-      select(next);
-    });
   }
 
   /* =========================================================
@@ -405,48 +417,6 @@
           if (other !== item && other.open) collapse(other);
         });
         expand(item);
-      });
-    });
-  }
-
-  /* =========================================================
-     Card tilt + cursor-tracked glow
-     Pointer-only: skipped for touch and reduced motion, where a tilt
-     is either impossible to aim or unwelcome.
-  ========================================================= */
-  function initCardTilt() {
-    if (prefersReducedMotion) return;
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-
-    const MAX_TILT = 3; // degrees
-    const cards = document.querySelectorAll(".svc-card, .buyer-lead-item");
-
-    cards.forEach((card) => {
-      let frame = null;
-
-      card.addEventListener("pointermove", (e) => {
-        if (frame) return;
-        frame = requestAnimationFrame(() => {
-          frame = null;
-          const rect = card.getBoundingClientRect();
-          const px = (e.clientX - rect.left) / rect.width;
-          const py = (e.clientY - rect.top) / rect.height;
-          card.style.setProperty("--rx", ((0.5 - py) * MAX_TILT * 2).toFixed(2) + "deg");
-          card.style.setProperty("--ry", ((px - 0.5) * MAX_TILT * 2).toFixed(2) + "deg");
-          card.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
-          card.style.setProperty("--my", (py * 100).toFixed(1) + "%");
-          card.classList.add("is-tilting");
-        });
-      });
-
-      card.addEventListener("pointerleave", () => {
-        if (frame) {
-          cancelAnimationFrame(frame);
-          frame = null;
-        }
-        card.classList.remove("is-tilting");
-        card.style.setProperty("--rx", "0deg");
-        card.style.setProperty("--ry", "0deg");
       });
     });
   }
@@ -525,14 +495,13 @@
   document.addEventListener("DOMContentLoaded", () => {
     initHeroWords();
     initNav();
+    initAnchorLinks();
     initScrollChrome();
     initReveals();
     initCounters();
     initCursorOrb();
     initMeshCanvas();
-    initProcessTabs();
     initFaq();
-    initCardTilt();
     initContactForm();
     initFooterYear();
   });
