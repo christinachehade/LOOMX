@@ -285,6 +285,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   height: 36px;
   width: auto;
 }
+.nav-inner .logo { flex-shrink: 0; }
 
 .nav-links {
   display: flex;
@@ -485,26 +486,19 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 
 /* =========================================================
-   Who We Help - static buyer grid
-   Two tiers: four lead cards, then an editorial index of the rest.
-   Deliberately not a marquee - this is where a visitor finds
-   themselves, so every item stays visible and still.
+   Who We Help - three audience cards
 ========================================================= */
 
 .buyer-lead {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 46px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 .buyer-lead-item {
   position: relative;
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  min-height: 132px;
-  padding: 24px 22px 22px;
-  border-radius: var(--radius-md);
+  padding: 30px 28px 32px;
+  border-radius: var(--radius-lg);
 }
 
 .buyer-lead-name {
@@ -516,23 +510,12 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   text-wrap: balance;
 }
 
-/* Remaining buyers as an index: hairline rules, no boxes, so a ragged
-   final row reads as intentional rather than as gaps in a grid. */
-.buyer-index {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 34px;
-}
-.buyer-index-item {
-  border-top: 1px solid var(--border);
-  padding: 16px 2px 15px;
-  font-size: 15.5px;
+
+.buyer-lead-desc {
+  margin-top: 12px;
   color: var(--text-dim);
-  transition: color 0.22s var(--ease-soft), border-color 0.22s var(--ease-soft);
-}
-.buyer-index-item:hover {
-  color: var(--text);
-  border-top-color: var(--accent);
+  font-size: 15.5px;
+  line-height: 1.62;
 }
 
 /* =========================================================
@@ -1048,6 +1031,9 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 @media (max-width: 1000px) {
   .nav-links { gap: 18px; font-size: 13.5px; }
 }
+@media (max-width: 860px) {
+  .nav-links { gap: 12px; }
+}
 
 @media (max-width: 980px) {
   .why-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -1055,8 +1041,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   .grid-3 { grid-template-columns: 1fr 1fr; }
   .footer-top { grid-template-columns: 1fr; }
   .footer-links { grid-template-columns: repeat(3, 1fr); }
-  .buyer-lead { grid-template-columns: repeat(2, 1fr); }
-  .buyer-index { grid-template-columns: repeat(3, 1fr); column-gap: 26px; }
 
   /* Five steps are too tight side by side here, so the line turns
      vertical and becomes a left spine. */
@@ -1102,11 +1086,9 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   .hero { padding-top: 120px; }
   .section { padding: 88px 0; }
 
-  .buyer-lead { grid-template-columns: 1fr; gap: 12px; margin-bottom: 36px; }
-  .buyer-lead-item { min-height: 0; padding: 20px 20px 18px; }
-  .buyer-lead-name { font-size: 19px; }
-  .buyer-index { grid-template-columns: repeat(2, 1fr); column-gap: 20px; }
-  .buyer-index-item { font-size: 14.5px; padding: 14px 2px 13px; }
+  .buyer-lead { grid-template-columns: 1fr; gap: 16px; }
+  .buyer-lead-item { padding: 26px 24px 28px; }
+  .buyer-lead-name { font-size: 20px; }
 
   .svc-group + .svc-group { margin-top: 48px; }
   .svc-group-head { gap: 14px; margin-bottom: 22px; }
