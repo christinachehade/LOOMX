@@ -252,14 +252,20 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   transition: background 0.3s var(--ease-soft), border-color 0.3s var(--ease-soft), padding 0.3s var(--ease-soft);
   border-bottom: 1px solid transparent;
 }
-.nav.scrolled,
-.nav.menu-open {
+.nav.scrolled {
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
   border-bottom: 1px solid var(--border);
   padding: 13px 0;
   box-shadow: 0 1px 0 rgba(20, 22, 43, 0.03);
+}
+/* Opening the menu only makes the bar solid; padding stays as it is so
+   the bar never shifts under the finger. */
+.nav.menu-open {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .nav-inner {
@@ -329,8 +335,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* Bottom padding clears the absolutely-positioned OO mark. */
-  padding: 140px 0 96px;
+  padding: 140px 0 48px;
   overflow: hidden;
   /* White centre opening out to a soft blue at the edges. */
   background: radial-gradient(ellipse 75% 85% at 50% 45%,
@@ -485,29 +490,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   .hero-point + .hero-point { border-left: none; }
 }
 
-.hero-mark {
-  /* The OO mark sits at the seam between the hero and Services, with a
-     slow float that doubles as a gentle cue to keep scrolling. */
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-}
-.hero-mark img {
-  display: block;
-  height: 34px;
-  width: auto;
-  opacity: 0.9;
-  animation: hero-mark-float 3.2s ease-in-out infinite;
-}
-@keyframes hero-mark-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(6px); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-mark img { animation: none; }
-}
 
 /* =========================================================
    Who We Help - three audience cards
