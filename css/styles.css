@@ -989,6 +989,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   max-width: 65ch;
 }
 .faq-answer p { padding-bottom: 22px; }
+.faq-answer p:not(:last-child) { padding-bottom: 12px; }
 .faq-item[open] .faq-answer p { animation: faq-answer-in 0.45s var(--ease) 0.06s both; }
 @keyframes faq-answer-in {
   from { opacity: 0; transform: translateY(6px); }
