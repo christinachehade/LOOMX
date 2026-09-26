@@ -252,7 +252,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   transition: background 0.3s var(--ease-soft), border-color 0.3s var(--ease-soft), padding 0.3s var(--ease-soft);
   border-bottom: 1px solid transparent;
 }
-.nav.scrolled {
+.nav.scrolled,
+.nav.menu-open {
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
@@ -280,11 +281,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   height: 30px;
   width: auto;
 }
-.brand-icon {
-  display: block;
-  height: 36px;
-  width: auto;
-}
 .nav-inner .logo { flex-shrink: 0; }
 
 .nav-links {
@@ -301,15 +297,26 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 .nav-toggle {
   display: none;
   flex-direction: column;
+  justify-content: center;
   gap: 5px;
-  width: 24px;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  padding: 0 10px;
 }
 .nav-toggle span {
   height: 2px;
   width: 100%;
   background: var(--text);
   border-radius: 2px;
+  transform-origin: center;
+  transition: transform 0.35s var(--ease), opacity 0.2s var(--ease-soft);
 }
+/* Bars fold into an X: outer bars meet in the middle (gap 5 + bar 2 = 7px)
+   and rotate, the middle bar fades out. */
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* =========================================================
    Hero
@@ -322,9 +329,25 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* Bottom padding clears the absolutely-positioned scroll indicator. */
+  /* Bottom padding clears the absolutely-positioned OO mark. */
   padding: 140px 0 96px;
   overflow: hidden;
+  /* White centre opening out to a soft blue at the edges. */
+  background: radial-gradient(ellipse 75% 85% at 50% 45%,
+    var(--bg) 45%,
+    rgba(var(--accent-ambient), 0.10) 100%);
+}
+/* Fade the bottom back to white so the hero meets Services seamlessly. */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 180px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), var(--bg));
+  pointer-events: none;
+  z-index: 1;
 }
 
 .mesh-canvas {
@@ -336,15 +359,15 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 }
 
 .hero-glow {
+  /* A white core over the drifting blobs keeps the centre clean, so the
+     hue only shows toward the sides. */
   position: absolute;
-  top: -20%;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 900px;
-  height: 900px;
-  max-width: 160vw;
-  background: radial-gradient(circle, rgba(var(--accent-ambient), 0.10) 0%, rgba(var(--accent-ambient), 0.04) 40%, transparent 70%);
-  filter: blur(40px);
+  transform: translate(-50%, -50%);
+  width: min(1100px, 100vw);
+  height: 100%;
+  background: radial-gradient(closest-side, var(--bg) 45%, rgba(255, 255, 255, 0) 100%);
   z-index: 0;
   pointer-events: none;
 }
@@ -356,15 +379,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.hero-logo {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 28px;
-}
-.hero-logo .brand-logo {
-  height: clamp(46px, 7vw, 66px);
 }
 
 .hero-title {
@@ -403,10 +417,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   margin-bottom: 40px;
 }
 .hero-sub p + p { margin-top: 14px; }
-.hero-sub-strong strong {
-  font-weight: 600;
-  color: var(--text);
-}
+.hero-brand { font-weight: 600; color: var(--text); }
 
 /* Staggered hero entrance. Each element carries its own --i, so the
    cadence is one 80ms step per element rather than hand-tuned delays. */
@@ -431,43 +442,71 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   justify-content: center;
 }
 
-.scroll-indicator {
+/* Two proof points under the CTA: icon chip, small tracked caps, and a
+   hairline between them. */
+.hero-points {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 48px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.hero-point {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 36px;
+  text-align: left;
+}
+.hero-point + .hero-point { border-left: 1px solid var(--border-strong); }
+.hero-point-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(var(--accent-ambient), 0.14);
+  color: var(--accent);
+}
+.hero-point-icon svg { display: block; }
+.hero-point-text {
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.8;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+@media (max-width: 600px) {
+  .hero-points { flex-direction: column; align-items: flex-start; gap: 20px; margin-top: 40px; }
+  .hero-point { padding: 0; }
+  .hero-point + .hero-point { border-left: none; }
+}
+
+.hero-mark {
+  /* The OO mark sits at the seam between the hero and Services, with a
+     slow float that doubles as a gentle cue to keep scrolling. */
   position: absolute;
-  bottom: 36px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-faint);
 }
-.scroll-line {
-  width: 1px;
-  height: 40px;
-  background: var(--border-strong);
-  position: relative;
-  overflow: hidden;
+.hero-mark img {
+  display: block;
+  height: 34px;
+  width: auto;
+  opacity: 0.9;
+  animation: hero-mark-float 3.2s ease-in-out infinite;
 }
-.scroll-dot {
-  position: absolute;
-  top: -10px;
-  left: -1.5px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 8px 2px var(--accent);
-  animation: scroll-fall 2s ease-in-out infinite;
+@keyframes hero-mark-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
 }
-@keyframes scroll-fall {
-  0% { top: -10px; opacity: 0; }
-  30% { opacity: 1; }
-  100% { top: 44px; opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-mark img { animation: none; }
 }
 
 /* =========================================================
@@ -1113,23 +1152,54 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 /* Six links plus the CTA need roughly 960px, so below that the links
    fold into the menu toggle while the CTA stays visible. */
 @media (max-width: 980px) {
-  .nav-links { display: none; }
-  .nav-cta { margin-left: auto; margin-right: 18px; }
+  .nav-cta { margin-left: auto; margin-right: 8px; }
   .nav-toggle { display: flex; }
-  .nav-links.open {
-    display: flex;
+
+  /* The menu panel stays in the layout so it can animate: it drops and
+     fades in, then each link follows on a short stagger. */
+  .nav-links {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 12px 32px 20px;
+    font-size: 17px;
     background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(16px);
-    padding: 24px 32px;
-    gap: 20px;
     border-bottom: 1px solid var(--border);
     box-shadow: 0 12px 24px -12px rgba(20, 22, 43, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease-soft), transform 0.4s var(--ease), visibility 0s linear 0.4s;
   }
+  .nav-links a {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.3s var(--ease-soft), transform 0.4s var(--ease), color 0.2s;
+  }
+  .nav-links a:last-child { border-bottom: none; }
+  .nav-links.open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+    transition: opacity 0.3s var(--ease-soft), transform 0.4s var(--ease), visibility 0s;
+  }
+  .nav-links.open a { opacity: 1; transform: none; }
+  .nav-links.open a:nth-child(1) { transition-delay: 0.04s; }
+  .nav-links.open a:nth-child(2) { transition-delay: 0.08s; }
+  .nav-links.open a:nth-child(3) { transition-delay: 0.12s; }
+  .nav-links.open a:nth-child(4) { transition-delay: 0.16s; }
+  .nav-links.open a:nth-child(5) { transition-delay: 0.20s; }
+  .nav-links.open a:nth-child(6) { transition-delay: 0.24s; }
 }
 
 @media (max-width: 980px) {

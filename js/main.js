@@ -29,12 +29,32 @@
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
-    toggle.addEventListener("click", () => {
-      links.classList.toggle("open");
-    });
+    const setOpen = (open) => {
+      links.classList.toggle("open", open);
+      nav.classList.toggle("menu-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    };
+
+    toggle.addEventListener("click", () => setOpen(!links.classList.contains("open")));
 
     links.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => links.classList.remove("open"));
+      a.addEventListener("click", () => setOpen(false));
+    });
+
+    // Close on Escape, on a tap outside the bar, or when the window grows
+    // past the breakpoint where the full link row returns.
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && links.classList.contains("open")) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    document.addEventListener("click", (e) => {
+      if (links.classList.contains("open") && !nav.contains(e.target)) setOpen(false);
+    });
+    window.matchMedia("(min-width: 981px)").addEventListener("change", (e) => {
+      if (e.matches) setOpen(false);
     });
   }
 
@@ -206,9 +226,9 @@
     // reads as atmosphere rather than a second brand colour.
     const AMBIENT = "140, 165, 255";
     const colors = [
-      `rgba(${AMBIENT}, 0.11)`,
+      `rgba(${AMBIENT}, 0.12)`,
       `rgba(${AMBIENT}, 0.09)`,
-      `rgba(${AMBIENT}, 0.06)`,
+      `rgba(${AMBIENT}, 0.07)`,
     ];
 
     function resize() {
@@ -221,14 +241,15 @@
     }
 
     const blobCount = 5;
+    // Blobs live along the left and right edges; the centre stays white.
     const blobs = Array.from({ length: blobCount }, (_, i) => ({
-      baseX: Math.random(),
-      baseY: Math.random() * 0.7,
+      baseX: i % 2 === 0 ? Math.random() * 0.12 : 0.88 + Math.random() * 0.12,
+      baseY: 0.1 + Math.random() * 0.7,
       r: 220 + Math.random() * 220,
       color: colors[i % colors.length],
       speed: 0.06 + Math.random() * 0.05,
       offset: Math.random() * Math.PI * 2,
-      driftX: 0.12 + Math.random() * 0.08,
+      driftX: 0.03 + Math.random() * 0.04,
       driftY: 0.1 + Math.random() * 0.08,
     }));
 
@@ -259,7 +280,9 @@
         const y = (b.baseY + Math.cos(t * b.speed + b.offset) * b.driftY) * height;
         const grad = ctx.createRadialGradient(x, y, 0, x, y, b.r);
         grad.addColorStop(0, b.color);
-        grad.addColorStop(1, "rgba(0,0,0,0)");
+        // Fade to the same hue at zero alpha; fading to transparent black
+        // greys out the wash on its way down.
+        grad.addColorStop(1, `rgba(${AMBIENT}, 0)`);
         ctx.fillStyle = grad;
         ctx.beginPath();
         ctx.arc(x, y, b.r, 0, Math.PI * 2);

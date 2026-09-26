@@ -33,7 +33,7 @@
 <header class="nav" id="nav">
   <div class="nav-inner">
     <a href="#top" class="logo">
-      <img class="brand-icon" src="assets/loomx-icon.png" alt="LOOMX MED">
+      <img class="brand-logo" src="assets/loomx-logo.png" alt="LOOMX MED">
     </a>
     <nav class="nav-links" id="navLinks">
       <a href="#services">What We Do</a>
@@ -49,7 +49,7 @@
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -61,10 +61,6 @@
   <div class="hero-glow"></div>
 
   <div class="hero-content container">
-    <div class="hero-logo hero-rise" style="--i:0">
-      <img class="brand-logo" src="assets/loomx-logo.png" alt="LOOMX MED">
-    </div>
-
     <h1 class="hero-title" id="heroTitle" aria-label="We turn clinical expertise and research into software.">
       <span class="line">
         <span class="word">We</span> <span class="word">turn</span> <span class="word">clinical</span>
@@ -78,12 +74,8 @@
     </h1>
 
     <div class="hero-sub hero-rise" style="--i:2">
-      <p>LOOMX MED is a healthcare product studio for physicians, researchers, and clinical teams building what doesn't exist yet.</p>
+      <p><strong class="hero-brand">LOOMX MED</strong> is a healthcare product studio for physicians, researchers, and clinical teams building what doesn't exist yet.</p>
       <p>You bring the expertise, research, or idea. We bring the product strategy, UX design, and engineering to turn it into a real digital product, from first concept to launch.</p>
-      <p class="hero-sub-strong">
-        <strong>From clinical insight to working product.</strong><br>
-        <strong>From research to real-world application.</strong>
-      </p>
     </div>
 
     <div class="hero-actions hero-rise" style="--i:4">
@@ -93,10 +85,21 @@
       </a>
     </div>
 
+    <ul class="hero-points hero-rise" style="--i:5">
+      <li class="hero-point">
+        <span class="hero-point-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg></span>
+        <span class="hero-point-text">From clinical insight<br>to working product.</span>
+      </li>
+      <li class="hero-point">
+        <span class="hero-point-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+        <span class="hero-point-text">From research to<br>real-world application.</span>
+      </li>
+    </ul>
+
   </div>
 
-  <div class="scroll-indicator hero-rise" style="--i:6" aria-hidden="true">
-    <div class="scroll-line"><div class="scroll-dot"></div></div>
+  <div class="hero-mark hero-rise" style="--i:6" aria-hidden="true">
+    <img src="assets/loomx-icon.png" alt="">
   </div>
 </section>
 
