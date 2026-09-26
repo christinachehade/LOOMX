@@ -39,6 +39,34 @@
   }
 
   /* =========================================================
+     In-page links: scroll to the section ourselves rather than
+     relying on the hash jump, which some embedded previews block.
+     Offsets by the fixed nav's height so headings aren't hidden.
+  ========================================================= */
+  function initAnchorLinks() {
+    const nav = document.getElementById("nav");
+
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const id = link.getAttribute("href").slice(1);
+        const target = id === "top" ? document.body : document.getElementById(id);
+        if (!target) return;
+        e.preventDefault();
+
+        const offset = nav ? nav.offsetHeight + 12 : 0;
+        const y = id === "top" ? 0 : target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: Math.max(0, y), behavior: prefersReducedMotion ? "auto" : "smooth" });
+
+        try {
+          history.replaceState(null, "", "#" + id);
+        } catch (err) {
+          /* Sandboxed frames can refuse history updates; the scroll still happens. */
+        }
+      });
+    });
+  }
+
+  /* =========================================================
      Scroll progress bar + back-to-top
   ========================================================= */
   function initScrollChrome() {
@@ -444,6 +472,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     initHeroWords();
     initNav();
+    initAnchorLinks();
     initScrollChrome();
     initReveals();
     initCounters();

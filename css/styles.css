@@ -15,7 +15,7 @@
      atmosphere rather than as a second brand colour. */
   --accent-ambient: 140, 165, 255;
   --text: #14162b;
-  --text-dim: #565b73;
+  --text-dim: #454a62;
   --text-faint: #6b7280;
   --border: rgba(20, 22, 43, 0.09);
   --border-strong: rgba(20, 22, 43, 0.16);
@@ -601,7 +601,15 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   padding: 120px 0;
   position: relative;
 }
-.section-alt { background: var(--bg-alt); }
+.section-alt {
+  /* Grey bands fade in and out of the white sections around them
+     instead of starting on a hard line. */
+  background: linear-gradient(180deg,
+    var(--bg) 0,
+    var(--bg-alt) 180px,
+    var(--bg-alt) calc(100% - 180px),
+    var(--bg) 100%);
+}
 /* The hero already carries its own bottom breathing room. */
 #services { padding-top: 32px; }
 
@@ -988,12 +996,14 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
 .contact-section { position: relative; overflow: hidden; }
 .contact-glow {
   position: absolute;
-  bottom: -30%;
+  /* Sits fully inside the section and fades to nothing at its own
+     edges, so the section's clipping never leaves a visible line. */
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 1000px;
   height: 700px;
-  background: radial-gradient(circle, rgba(var(--accent-ambient), 0.10), transparent 65%);
+  background: radial-gradient(closest-side, rgba(var(--accent-ambient), 0.12), transparent);
   filter: blur(40px);
   pointer-events: none;
 }
@@ -1053,7 +1063,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
    Footer
 ========================================================= */
 
-.footer { padding: 80px 0 32px; border-top: 1px solid var(--border); background: var(--bg-alt); }
+.footer { padding: 80px 0 32px; background: linear-gradient(180deg, var(--bg) 0, var(--bg-alt) 140px); }
 .footer-top {
   display: grid;
   grid-template-columns: 1fr 2fr;
