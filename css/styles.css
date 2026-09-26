@@ -416,24 +416,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   margin-bottom: 56px;
 }
 
-.hero-trust {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  font-size: 13.5px;
-  color: var(--text-faint);
-}
-.trust-tags {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-  color: var(--text-dim);
-  font-weight: 500;
-}
-.trust-tags .sep { opacity: 0.4; }
-
 .scroll-indicator {
   position: absolute;
   bottom: 36px;
@@ -471,85 +453,6 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   0% { top: -10px; opacity: 0; }
   30% { opacity: 1; }
   100% { top: 44px; opacity: 0; }
-}
-
-/* =========================================================
-   Marquee
-========================================================= */
-
-.marquee-strip {
-  position: relative;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 22px 0;
-  overflow: hidden;
-  background: var(--bg-alt);
-}
-.marquee-strip::before,
-.marquee-strip::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 120px;
-  z-index: 2;
-  pointer-events: none;
-}
-.marquee-strip::before {
-  left: 0;
-  background: linear-gradient(90deg, var(--bg-alt), transparent);
-}
-.marquee-strip::after {
-  right: 0;
-  background: linear-gradient(270deg, var(--bg-alt), transparent);
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-  /* Slow: the strip is ~3x longer than it was, so the duration scales
-     with it to keep the drift subtle rather than speeding up. */
-  animation: marquee-scroll 95s linear infinite;
-}
-.marquee-track.marquee-reverse {
-  animation-name: marquee-scroll-reverse;
-  animation-duration: 105s;
-}
-.marquee-strip:hover .marquee-track { animation-play-state: paused; }
-
-.marquee-group {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding-right: 20px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-dim);
-  white-space: nowrap;
-}
-.marquee-group .sep { color: var(--accent); opacity: 0.6; font-size: 12px; }
-
-@keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-@keyframes marquee-scroll-reverse {
-  from { transform: translateX(-50%); }
-  to { transform: translateX(0); }
-}
-
-/* Reduced motion: hold the strip still and let it be scrolled by hand
-   rather than letting the global animation shortcut jump it off-centre. */
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track {
-    animation: none !important;
-    transform: none !important;
-    width: auto;
-  }
-  .marquee-track .marquee-group:last-child { display: none; }
-  .marquee-strip { overflow-x: auto; }
-  .marquee-strip::before,
-  .marquee-strip::after { display: none; }
 }
 
 /* =========================================================
